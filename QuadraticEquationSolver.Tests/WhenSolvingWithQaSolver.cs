@@ -1,5 +1,6 @@
 #region Usings
 
+using FluentAssertions;
 using NUnit.Framework;
 
 #endregion
@@ -8,15 +9,20 @@ namespace QuadraticEquationSolver.Tests
 {
     public class WhenSolvingWithQaSolver : TestBase
     {
-        [Test]
-        public void TestPasses()
+        private QaSolver Solver { get; set; }
+
+        public override void Setup()
         {
-            var solver = new QaSolver();
+            base.Setup();
+            Solver = new QaSolver();
+        }
 
-            var result = solver.Solve(1, 1, 1);
+        [TestCase(1, 0, 1)]
+        public void NoRootsFound(double a, double b, double c)
+        {
+            var result = Solver.Solve(a, b, c);
 
-            // todo test stub
-            Assert.Pass();
+            result.Should().BeEmpty();
         }
     }
 }

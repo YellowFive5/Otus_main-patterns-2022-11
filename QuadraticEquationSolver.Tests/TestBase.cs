@@ -9,7 +9,7 @@ namespace QuadraticEquationSolver.Tests
     public class TestBase
     {
         [SetUp]
-        public void Setup()
+        public virtual void Setup()
         {
         }
     }
