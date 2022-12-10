@@ -55,5 +55,23 @@ namespace QuadraticEquationSolver.Tests
                .Throw<Exception>()
                .WithMessage("'A' must not be zero");
         }
+
+        [TestCase(double.NaN, 0, 0)]
+        [TestCase(double.NegativeInfinity, 0, 0)]
+        [TestCase(double.PositiveInfinity, 0, 0)]
+        [TestCase(0, double.NaN, 0)]
+        [TestCase(0, double.NegativeInfinity, 0)]
+        [TestCase(0, double.PositiveInfinity, 0)]
+        [TestCase(0, 0, double.NaN)]
+        [TestCase(0, 0, double.NegativeInfinity)]
+        [TestCase(0, 0, double.PositiveInfinity)]
+        public void ExceptionThrowsWhenCoefficientNotANumber(double a, double b, double c)
+        {
+            Action act = () => Solver.Solve(a, b, c);
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Wrong coefficient value");
+        }
     }
 }
