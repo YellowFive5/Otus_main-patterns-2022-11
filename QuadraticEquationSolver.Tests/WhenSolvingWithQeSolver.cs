@@ -46,8 +46,7 @@ namespace QuadraticEquationSolver.Tests
             result.First().Should().Be(xExpected);
         }
 
-        [TestCase(0)]
-        [TestCase(0.00000000000000000001)]
+        [TestCase(0.0000000001)]
         public void ExceptionThrowsWhenAEqualsZero(double a)
         {
             Action act = () => Solver.Solve(a, 0, 0);
