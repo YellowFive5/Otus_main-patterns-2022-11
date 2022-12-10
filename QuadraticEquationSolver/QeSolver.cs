@@ -17,9 +17,10 @@ namespace QuadraticEquationSolver
 
             var d = Math.Pow(b, 2) - 4 * a * c;
 
-            if (d < 0)
+            if (Math.Abs(d) < e)
             {
-                return new double[] { };
+                var x = -b / (2 * a);
+                return new[] { x };
             }
 
             if (d > 0)
@@ -29,13 +30,7 @@ namespace QuadraticEquationSolver
                 return new[] { x1, x2 };
             }
 
-            if (d == 0)
-            {
-                var x = -b / (2 * a);
-                return new[] { x };
-            }
-
-            return new[] { a, b, c };
+            return new double[] { };
         }
     }
 }
