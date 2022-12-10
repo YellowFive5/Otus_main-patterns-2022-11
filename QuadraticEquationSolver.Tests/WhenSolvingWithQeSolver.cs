@@ -7,14 +7,14 @@ using NUnit.Framework;
 
 namespace QuadraticEquationSolver.Tests
 {
-    public class WhenSolvingWithQaSolver : TestBase
+    public class WhenSolvingWithQeSolver : TestBase
     {
-        private QaSolver Solver { get; set; }
+        private QeSolver Solver { get; set; }
 
         public override void Setup()
         {
             base.Setup();
-            Solver = new QaSolver();
+            Solver = new QeSolver();
         }
 
         [TestCase(1, 0, 1)]
