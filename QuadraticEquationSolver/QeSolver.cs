@@ -10,6 +10,12 @@ namespace QuadraticEquationSolver
     {
         public double[] Solve(double a, double b, double c, double e = 1e-5)
         {
+            if (double.IsNaN(a) || double.IsNaN(b) || double.IsNaN(c) ||
+                double.IsInfinity(a) || double.IsInfinity(b) || double.IsInfinity(c))
+            {
+                throw new Exception("Wrong coefficient value");
+            }
+
             if (Math.Abs(a) < e)
             {
                 throw new Exception("'A' must not be zero");
