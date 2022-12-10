@@ -37,7 +37,7 @@ namespace QuadraticEquationSolver.Tests
             result.ElementAt(1).Should().Be(x2Expected);
         }
 
-        [TestCase(1, 2, 1, -1)]
+        [TestCase(1, 2, 1.0000000001, -1)]
         public void OneRootFound(double a, double b, double c, double xExpected)
         {
             var result = Solver.Solve(a, b, c);
