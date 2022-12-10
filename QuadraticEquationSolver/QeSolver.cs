@@ -8,8 +8,13 @@ namespace QuadraticEquationSolver
 {
     public class QeSolver : ISolver
     {
-        public double[] Solve(double a, double b, double c)
+        public double[] Solve(double a, double b, double c, double e = 1e-5)
         {
+            if (Math.Abs(a) < e)
+            {
+                throw new Exception("'A' must not be zero");
+            }
+
             var d = Math.Pow(b, 2) - 4 * a * c;
 
             if (d < 0)
