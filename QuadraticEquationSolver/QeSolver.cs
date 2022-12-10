@@ -24,6 +24,12 @@ namespace QuadraticEquationSolver
                 return new[] { x1, x2 };
             }
 
+            if (d == 0)
+            {
+                var x = -b / (2 * a);
+                return new[] { x };
+            }
+
             return new[] { a, b, c };
         }
     }
