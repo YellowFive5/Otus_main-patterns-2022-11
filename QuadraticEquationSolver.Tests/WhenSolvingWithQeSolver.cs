@@ -46,10 +46,11 @@ namespace QuadraticEquationSolver.Tests
             result.First().Should().Be(xExpected);
         }
 
-        [TestCase(0, 1, 1)]
-        public void ExceptionThrowsWhenAEqualsZero(double a, double b, double c)
+        [TestCase(0)]
+        [TestCase(0.00000000000000000001)]
+        public void ExceptionThrowsWhenAEqualsZero(double a)
         {
-            Action act = () => Solver.Solve(a, b, c);
+            Action act = () => Solver.Solve(a, 0, 0);
 
             act.Should()
                .Throw<Exception>()
