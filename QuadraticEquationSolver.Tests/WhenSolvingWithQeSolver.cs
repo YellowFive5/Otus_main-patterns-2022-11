@@ -35,5 +35,14 @@ namespace QuadraticEquationSolver.Tests
             result.ElementAt(0).Should().Be(x1Expected);
             result.ElementAt(1).Should().Be(x2Expected);
         }
+
+        [TestCase(1, 2, 1, -1)]
+        public void OneRootFound(double a, double b, double c, double xExpected)
+        {
+            var result = Solver.Solve(a, b, c);
+
+            result.Length.Should().Be(1);
+            result.First().Should().Be(xExpected);
+        }
     }
 }
