@@ -1,5 +1,6 @@
 #region Usings
 
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -23,6 +24,16 @@ namespace QuadraticEquationSolver.Tests
             var result = Solver.Solve(a, b, c);
 
             result.Should().BeEmpty();
+        }
+
+        [TestCase(1, 0, -1, 1, -1)]
+        public void TwoRootsFound(double a, double b, double c, double x1Expected, double x2Expected)
+        {
+            var result = Solver.Solve(a, b, c);
+
+            result.Length.Should().Be(2);
+            result.ElementAt(0).Should().Be(x1Expected);
+            result.ElementAt(1).Should().Be(x2Expected);
         }
     }
 }
