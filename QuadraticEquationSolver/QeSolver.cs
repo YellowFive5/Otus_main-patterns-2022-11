@@ -17,6 +17,13 @@ namespace QuadraticEquationSolver
                 return new double[] { };
             }
 
+            if (d > 0)
+            {
+                var x1 = (-b + Math.Sqrt(d)) / (2 * a);
+                var x2 = (-b - Math.Sqrt(d)) / (2 * a);
+                return new[] { x1, x2 };
+            }
+
             return new[] { a, b, c };
         }
     }
