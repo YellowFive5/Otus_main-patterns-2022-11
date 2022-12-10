@@ -1,5 +1,6 @@
 #region Usings
 
+using System;
 using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
@@ -43,6 +44,16 @@ namespace QuadraticEquationSolver.Tests
 
             result.Length.Should().Be(1);
             result.First().Should().Be(xExpected);
+        }
+
+        [TestCase(0, 1, 1)]
+        public void ExceptionThrowsWhenAEqualsZero(double a, double b, double c)
+        {
+            Action act = () => Solver.Solve(a, b, c);
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("'A' must not be zero");
         }
     }
 }
