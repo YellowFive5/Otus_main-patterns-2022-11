@@ -3,6 +3,7 @@
 using System;
 using System.Numerics;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 
 #endregion
@@ -14,16 +15,14 @@ namespace Move.Tests
         [TestCase(12, 5, -7, 3, 5, 8)]
         public void ObjectMoves(float posX, float posY, float velX, float velY, float expectedPosX, float expectedPosY)
         {
-            var objectToMove = new SpaceShip
-                               {
-                                   Position = new Vector2(posX, posY),
-                                   Velocity = new Vector2(velX, velY) // init only
-                               };
-            var mover = new Move(objectToMove);
+            var objectToMove = new Mock<IMovable>();
+            objectToMove.SetupGet(o => o.Position).Returns(new Vector2(posX, posY));
+            objectToMove.SetupGet(o => o.Velocity).Returns(new Vector2(velX, velY));
+            var mover = new Move(objectToMove.Object);
 
             mover.Execute();
 
-            objectToMove.Position.Should().Be(new Vector2(expectedPosX, expectedPosY));
+            objectToMove.VerifySet(o => o.Position = new Vector2(expectedPosX, expectedPosY));
         }
 
         [Test]
@@ -47,8 +46,10 @@ namespace Move.Tests
         [TestCase(0, float.PositiveInfinity)]
         public void ExceptionThrowsWhenCantGetPosition(float posX, float posY)
         {
-            var objectToMove = new SpaceShip { Position = new Vector2(posX, posY) };
-            var mover = new Move(objectToMove);
+            var objectToMove = new Mock<IMovable>();
+            objectToMove.SetupGet(o => o.Position).Returns(new Vector2(posX, posY));
+
+            var mover = new Move(objectToMove.Object);
 
             Action act = () => mover.Execute();
 
@@ -65,8 +66,9 @@ namespace Move.Tests
         [TestCase(0, float.PositiveInfinity)]
         public void ExceptionThrowsWhenCantGetVelocity(float velX, float velY)
         {
-            var objectToMove = new SpaceShip { Velocity = new Vector2(velX, velY) };
-            var mover = new Move(objectToMove);
+            var objectToMove = new Mock<IMovable>();
+            objectToMove.SetupGet(o => o.Velocity).Returns(new Vector2(velX, velY));
+            var mover = new Move(objectToMove.Object);
 
             Action act = () => mover.Execute();
 
