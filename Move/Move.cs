@@ -26,6 +26,15 @@ namespace Move
                 throw new Exception("Can't get object position");
             }
 
+            if (float.IsInfinity(toMove.Velocity.X) ||
+                float.IsInfinity(toMove.Velocity.Y) ||
+                float.IsNaN(toMove.Velocity.X) ||
+                float.IsNaN(toMove.Velocity.Y))
+            {
+                throw new Exception("Can't get object velocity");
+            }
+
+
             toMove.Position += toMove.Velocity;
         }
     }
