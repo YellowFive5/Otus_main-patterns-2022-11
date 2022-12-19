@@ -56,5 +56,23 @@ namespace Move.Tests
                .Throw<Exception>()
                .WithMessage("Can't get object position");
         }
+
+        [TestCase(float.NaN, 0)]
+        [TestCase(float.NegativeInfinity, 0)]
+        [TestCase(float.PositiveInfinity, 0)]
+        [TestCase(0, float.NaN)]
+        [TestCase(0, float.NegativeInfinity)]
+        [TestCase(0, float.PositiveInfinity)]
+        public void ExceptionThrowsWhenCantGetVelocity(float velX, float velY)
+        {
+            var objectToMove = new SpaceShip { Velocity = new Vector2(velX, velY) };
+            var mover = new Move(objectToMove);
+
+            Action act = () => mover.Execute();
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Can't get object velocity");
+        }
     }
 }
