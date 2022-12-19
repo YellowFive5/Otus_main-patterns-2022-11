@@ -6,9 +6,13 @@ using System.Numerics;
 
 namespace Move
 {
-    public class FotonBullet : IMovable
+    public class FotonBullet : IMovable, IRotatable
     {
         public Vector2 Position { get; set; }
         public Vector2 Velocity { get; }
+
+        public int Direction { get; set; }
+        public int AngularVelocity { get; }
+        public int Directions { get; }
     }
 }
