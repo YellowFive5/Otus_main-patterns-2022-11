@@ -26,6 +26,19 @@ namespace Move.Tests
             objectToMove.Position.Should().Be(new Vector2(expectedPosX, expectedPosY));
         }
 
+        [Test]
+        public void ExceptionThrowsWhenMovableObjectIsNull()
+        {
+            IMovable objectToMove = null;
+            var mover = new Move(objectToMove);
+
+            Action act = () => mover.Execute();
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Can't move object");
+        }
+
         [TestCase(float.NaN, 0)]
         [TestCase(float.NegativeInfinity, 0)]
         [TestCase(float.PositiveInfinity, 0)]
@@ -35,19 +48,6 @@ namespace Move.Tests
         public void ExceptionThrowsWhenCantGetPosition(float posX, float posY)
         {
             var objectToMove = new SpaceShip { Position = new Vector2(posX, posY) };
-            var mover = new Move(objectToMove);
-
-            Action act = () => mover.Execute();
-
-            act.Should()
-               .Throw<Exception>()
-               .WithMessage("Can't get object position");
-        }
-
-        [Test]
-        public void ExceptionThrowsWhenMovableObjectIsNull()
-        {
-            IMovable objectToMove = null;
             var mover = new Move(objectToMove);
 
             Action act = () => mover.Execute();
