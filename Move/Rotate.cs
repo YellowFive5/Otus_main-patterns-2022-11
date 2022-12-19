@@ -21,6 +21,8 @@ namespace Move
             {
                 throw new Exception("Can't rotate object");
             }
+
+            toRotate.Direction += toRotate.AngularVelocity % toRotate.Direction;
         }
     }
 }
