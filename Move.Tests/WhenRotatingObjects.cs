@@ -14,9 +14,9 @@ namespace Move.Tests
         public void ExceptionThrowsWhenRotatableObjectIsNull()
         {
             IRotatable objectToRotate = null;
-            var mover = new Rotate(objectToRotate);
+            var rotator = new Rotate(objectToRotate);
 
-            Action act = () => mover.Execute();
+            Action act = () => rotator.Execute();
 
             act.Should()
                .Throw<Exception>()

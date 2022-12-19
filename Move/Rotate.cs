@@ -1,4 +1,10 @@
-﻿namespace Move
+﻿#region Usings
+
+using System;
+
+#endregion
+
+namespace Move
 {
     public class Rotate
     {
@@ -11,6 +17,10 @@
 
         public void Execute()
         {
+            if (toRotate == null)
+            {
+                throw new Exception("Can't rotate object");
+            }
         }
     }
 }
