@@ -11,6 +11,7 @@
 
         public void Execute()
         {
+            toMove.Position += toMove.Velocity;
         }
     }
 }
