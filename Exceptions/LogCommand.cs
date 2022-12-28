@@ -10,6 +10,7 @@ namespace Exceptions
 
         public void Execute()
         {
+            LogMessage = "New logged message";
         }
     }
 }
