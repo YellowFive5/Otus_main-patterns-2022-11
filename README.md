@@ -13,4 +13,10 @@
 
 7_SOLID и исключения
 
+* [Exceptions](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Exceptions)
+* [Exceptions.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Exceptions.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/2)
+
+8_Команда
+
 ...
