@@ -54,5 +54,21 @@ namespace Exceptions.Tests
             succeededCommand1.Verify(c => c.Execute(), Times.Once);
             succeededCommand2.Verify(c => c.Execute(), Times.Once);
         }
+
+        [Test]
+        public void CommandsRunsWithDoubleRetryAndLog()
+        {
+            var succeededCommand = new Mock<ICommand>();
+            var failedCommand = new Mock<ICommand>();
+            failedCommand.Setup(fc => fc.Execute()).Throws(new Exception("Fails exception"));
+            var commands = new Queue<ICommand>(new[] { succeededCommand.Object, failedCommand.Object });
+            var server = new Server(commands, Logger.Object);
+
+            server.RunCommandsWithDoubleRetryAndLog();
+
+            succeededCommand.Verify(c => c.Execute(), Times.Once);
+            failedCommand.Verify(c => c.Execute(), Times.Exactly(3));
+            Logger.Verify(l => l.Log("Fails exception"));
+        }
     }
 }
