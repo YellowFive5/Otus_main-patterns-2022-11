@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using Exceptions;
+using Exceptions.Commands;
 
 #endregion
 

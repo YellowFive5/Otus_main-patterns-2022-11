@@ -1,10 +1,11 @@
 ﻿#region Usings
 
 using System.Collections.Generic;
+using Exceptions.Commands;
 
 #endregion
 
-namespace Exceptions
+namespace Exceptions.Handlers
 {
     public class LogExceptionHandler : IExceptionHandler
     {

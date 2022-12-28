@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Exceptions.Commands;
+using Exceptions.Handlers;
 
 #endregion
 
@@ -47,7 +49,25 @@ namespace Exceptions
             while (Commands.Any())
             {
                 var command = Commands.Dequeue();
-                command.Execute();
+                try
+                {
+                    command.Execute();
+                }
+                catch (Exception e)
+                {
+                    switch (command)
+                    {
+                        case DoubleRetryCommand:
+                            new LogExceptionHandler(Commands, logger, e.Message).Handle();
+                            break;
+                        case RetryCommand:
+                            new DoubleRetryExceptionHandler(Commands, command).Handle();
+                            break;
+                        default:
+                            new RetryExceptionHandler(Commands, command).Handle();
+                            break;
+                    }
+                }
             }
         }
     }

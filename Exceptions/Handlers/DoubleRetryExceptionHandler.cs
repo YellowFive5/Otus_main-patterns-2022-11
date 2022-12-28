@@ -1,17 +1,18 @@
 ﻿#region Usings
 
 using System.Collections.Generic;
+using Exceptions.Commands;
 
 #endregion
 
-namespace Exceptions
+namespace Exceptions.Handlers
 {
-    public class RetryExceptionHandler : IExceptionHandler
+    public class DoubleRetryExceptionHandler : IExceptionHandler
     {
         private readonly Queue<ICommand> commands;
         private readonly ICommand commandToRetry;
 
-        public RetryExceptionHandler(Queue<ICommand> commands, ICommand commandToRetry)
+        public DoubleRetryExceptionHandler(Queue<ICommand> commands, ICommand commandToRetry)
         {
             this.commands = commands;
             this.commandToRetry = commandToRetry;
@@ -19,7 +20,7 @@ namespace Exceptions
 
         public void Handle()
         {
-            commands.Enqueue(new RetryCommand(commandToRetry));
+            commands.Enqueue(new DoubleRetryCommand(commandToRetry));
         }
     }
 }

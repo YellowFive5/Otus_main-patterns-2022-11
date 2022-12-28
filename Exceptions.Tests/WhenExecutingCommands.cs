@@ -1,5 +1,6 @@
 #region Usings
 
+using Exceptions.Commands;
 using Moq;
 using NUnit.Framework;
 
@@ -28,6 +29,17 @@ namespace Exceptions.Tests
             retryCommand.Execute();
 
             failedCommand.Verify(fc => fc.Execute(), Times.Once);
+        }
+
+        [Test]
+        public void DoubleRetryCommandExecutes()
+        {
+            var failedRetriedCommand = new Mock<ICommand>();
+            var doubleRetryCommand = new DoubleRetryCommand(failedRetriedCommand.Object);
+
+            doubleRetryCommand.Execute();
+
+            failedRetriedCommand.Verify(fc => fc.Execute(), Times.Once);
         }
     }
 }

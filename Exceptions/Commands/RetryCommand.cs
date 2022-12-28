@@ -2,7 +2,7 @@
 
 #endregion
 
-namespace Exceptions
+namespace Exceptions.Commands
 {
     public class RetryCommand : ICommand
     {

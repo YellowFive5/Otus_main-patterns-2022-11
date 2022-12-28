@@ -2,6 +2,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Exceptions.Commands;
+using Exceptions.Handlers;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -36,6 +38,19 @@ namespace Exceptions.Tests
             handler.Handle();
 
             server.Commands.OfType<RetryCommand>().Count().Should().Be(1);
+        }
+
+        [Test]
+        public void DoubleRetryExceptionHandlerEnqueuesDoubleRetryCommand()
+        {
+            var server = new Server(new Queue<ICommand>(), Logger.Object);
+            var handler = new DoubleRetryExceptionHandler(server.Commands, new Mock<ICommand>().Object);
+
+            server.Commands.Should().BeEmpty();
+
+            handler.Handle();
+
+            server.Commands.OfType<DoubleRetryCommand>().Count().Should().Be(1);
         }
     }
 }

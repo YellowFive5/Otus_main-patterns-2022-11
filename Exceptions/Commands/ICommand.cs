@@ -1,4 +1,4 @@
-﻿namespace Exceptions
+﻿namespace Exceptions.Commands
 {
     public interface ICommand
     {

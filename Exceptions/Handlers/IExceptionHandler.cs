@@ -1,4 +1,4 @@
-﻿namespace Exceptions
+﻿namespace Exceptions.Handlers
 {
     public interface IExceptionHandler
     {
