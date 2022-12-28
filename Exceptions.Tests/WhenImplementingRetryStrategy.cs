@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System;
+using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
 
@@ -15,9 +16,8 @@ namespace Exceptions.Tests
         {
             var succeededCommand1 = new Mock<ICommand>();
             var succeededCommand2 = new Mock<ICommand>();
-            var server = new Server();
-            server.Commands.Enqueue(succeededCommand1.Object);
-            server.Commands.Enqueue(succeededCommand2.Object);
+            var commands = new Queue<ICommand>(new[] { succeededCommand1.Object, succeededCommand2.Object });
+            var server = new Server(commands, Logger.Object);
 
             server.RunCommandsWithSingleRetryAndLog();
 
@@ -30,17 +30,15 @@ namespace Exceptions.Tests
         {
             var succeededCommand = new Mock<ICommand>();
             var failedCommand = new Mock<ICommand>();
-            failedCommand.Setup(fc => fc.Execute()).Throws<Exception>();
-            var server = new Server();
-            server.Commands.Enqueue(succeededCommand.Object);
-            server.Commands.Enqueue(failedCommand.Object);
+            failedCommand.Setup(fc => fc.Execute()).Throws(new Exception("Fails exception"));
+            var commands = new Queue<ICommand>(new[] { succeededCommand.Object, failedCommand.Object });
+            var server = new Server(commands, Logger.Object);
 
             server.RunCommandsWithSingleRetryAndLog();
 
             succeededCommand.Verify(c => c.Execute(), Times.Once);
             failedCommand.Verify(c => c.Execute(), Times.Exactly(2));
-            
-            // todo add logger mock
+            Logger.Verify(l => l.Log("Fails exception"));
         }
     }
 }

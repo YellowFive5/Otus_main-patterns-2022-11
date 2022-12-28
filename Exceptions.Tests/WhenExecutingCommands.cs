@@ -1,6 +1,5 @@
 #region Usings
 
-using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -13,13 +12,11 @@ namespace Exceptions.Tests
         [Test]
         public void LogCommandExecutes()
         {
-            var logCommand = new LogCommand();
-
-            logCommand.LogMessage.Should().Be("No message");
+            var logCommand = new LogCommand(Logger.Object, "Message to log");
 
             logCommand.Execute();
 
-            logCommand.LogMessage.Should().Be("New logged message");
+            Logger.Verify(l => l.Log("Message to log"), Times.Once);
         }
 
         [Test]
@@ -30,7 +27,7 @@ namespace Exceptions.Tests
 
             retryCommand.Execute();
 
-            failedCommand.Verify(fc => fc.Execute(), Times.Exactly(1));
+            failedCommand.Verify(fc => fc.Execute(), Times.Once);
         }
     }
 }

@@ -10,7 +10,14 @@ namespace Exceptions
 {
     public class Server
     {
-        public Queue<ICommand> Commands { get; } = new();
+        public Queue<ICommand> Commands { get; }
+        private readonly ILogger logger;
+
+        public Server(Queue<ICommand> commands, ILogger logger)
+        {
+            Commands = commands;
+            this.logger = logger;
+        }
 
         public void RunCommandsWithSingleRetryAndLog()
         {
@@ -21,11 +28,11 @@ namespace Exceptions
                 {
                     command.Execute();
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
                     if (command is RetryCommand)
                     {
-                        new LogExceptionHandler(Commands).Handle();
+                        new LogExceptionHandler(Commands, logger, e.Message).Handle();
                     }
                     else
                     {

@@ -1,16 +1,22 @@
 ﻿#region Usings
 
+using Exceptions;
+
 #endregion
 
-namespace Exceptions
+public class LogCommand : ICommand
 {
-    public class LogCommand : ICommand
-    {
-        public string LogMessage { get; private set; } = "No message";
+    private readonly ILogger logger;
+    private readonly string message;
 
-        public void Execute()
-        {
-            LogMessage = "New logged message";
-        }
+    public LogCommand(ILogger logger, string message)
+    {
+        this.logger = logger;
+        this.message = message;
+    }
+
+    public void Execute()
+    {
+        logger.Log(message);
     }
 }

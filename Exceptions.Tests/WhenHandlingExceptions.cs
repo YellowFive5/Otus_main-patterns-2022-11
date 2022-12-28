@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Moq;
@@ -14,8 +15,8 @@ namespace Exceptions.Tests
         [Test]
         public void LogExceptionHandlerEnqueuesLogCommand()
         {
-            var server = new Server();
-            var handler = new LogExceptionHandler(server.Commands);
+            var server = new Server(new Queue<ICommand>(), Logger.Object);
+            var handler = new LogExceptionHandler(server.Commands, Logger.Object, "Message to log");
 
             server.Commands.Should().BeEmpty();
 
@@ -27,9 +28,8 @@ namespace Exceptions.Tests
         [Test]
         public void RetryExceptionHandlerEnqueuesRetryCommand()
         {
-            var server = new Server();
-            var failedCommand = new Mock<ICommand>();
-            var handler = new RetryExceptionHandler(server.Commands, failedCommand.Object);
+            var server = new Server(new Queue<ICommand>(), Logger.Object);
+            var handler = new RetryExceptionHandler(server.Commands, new Mock<ICommand>().Object);
 
             server.Commands.Should().BeEmpty();
 
