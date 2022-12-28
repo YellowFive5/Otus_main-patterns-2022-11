@@ -9,5 +9,9 @@ namespace Exceptions
     public class Server
     {
         public Queue<ICommand> Commands { get; } = new();
+
+        public void RunCommandsWithSingleRetryAndLog()
+        {
+        }
     }
 }
