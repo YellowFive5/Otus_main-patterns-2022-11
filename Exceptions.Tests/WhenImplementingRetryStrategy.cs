@@ -39,6 +39,8 @@ namespace Exceptions.Tests
 
             succeededCommand.Verify(c => c.Execute(), Times.Once);
             failedCommand.Verify(c => c.Execute(), Times.Exactly(2));
+            
+            // todo add logger mock
         }
     }
 }

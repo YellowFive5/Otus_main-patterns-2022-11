@@ -1,6 +1,8 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 #endregion
 
@@ -12,9 +14,24 @@ namespace Exceptions
 
         public void RunCommandsWithSingleRetryAndLog()
         {
-            foreach (var command in Commands)
+            while (Commands.Any())
             {
-                command.Execute();
+                var command = Commands.Dequeue();
+                try
+                {
+                    command.Execute();
+                }
+                catch (Exception)
+                {
+                    if (command is RetryCommand)
+                    {
+                        new LogExceptionHandler(Commands).Handle();
+                    }
+                    else
+                    {
+                        new RetryExceptionHandler(Commands, command).Handle();
+                    }
+                }
             }
         }
     }
