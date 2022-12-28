@@ -8,6 +8,6 @@ namespace Exceptions
 {
     public class Server
     {
-        public Queue<ICommand> Commands { get; private set; }
+        public Queue<ICommand> Commands { get; } = new();
     }
 }
