@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using Moq;
 using NUnit.Framework;
 
@@ -22,6 +23,22 @@ namespace Exceptions.Tests
 
             succeededCommand1.Verify(c => c.Execute(), Times.Once);
             succeededCommand2.Verify(c => c.Execute(), Times.Once);
+        }
+
+        [Test]
+        public void CommandsRunsWithSingleRetryAndLog()
+        {
+            var succeededCommand = new Mock<ICommand>();
+            var failedCommand = new Mock<ICommand>();
+            failedCommand.Setup(fc => fc.Execute()).Throws<Exception>();
+            var server = new Server();
+            server.Commands.Enqueue(succeededCommand.Object);
+            server.Commands.Enqueue(failedCommand.Object);
+
+            server.RunCommandsWithSingleRetryAndLog();
+
+            succeededCommand.Verify(c => c.Execute(), Times.Once);
+            failedCommand.Verify(c => c.Execute(), Times.Exactly(2));
         }
     }
 }
