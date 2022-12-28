@@ -12,7 +12,7 @@ namespace Exceptions.Tests
     public class WhenImplementingRetryStrategy : TestBase
     {
         [Test]
-        public void CommandsRunsWhenNoException()
+        public void CommandsRunsWhenNoExceptionOnSingleRetry()
         {
             var succeededCommand1 = new Mock<ICommand>();
             var succeededCommand2 = new Mock<ICommand>();
@@ -39,6 +39,20 @@ namespace Exceptions.Tests
             succeededCommand.Verify(c => c.Execute(), Times.Once);
             failedCommand.Verify(c => c.Execute(), Times.Exactly(2));
             Logger.Verify(l => l.Log("Fails exception"));
+        }
+
+        [Test]
+        public void CommandsRunsWhenNoExceptionOnDoubleRetry()
+        {
+            var succeededCommand1 = new Mock<ICommand>();
+            var succeededCommand2 = new Mock<ICommand>();
+            var commands = new Queue<ICommand>(new[] { succeededCommand1.Object, succeededCommand2.Object });
+            var server = new Server(commands, Logger.Object);
+
+            server.RunCommandsWithDoubleRetryAndLog();
+
+            succeededCommand1.Verify(c => c.Execute(), Times.Once);
+            succeededCommand2.Verify(c => c.Execute(), Times.Once);
         }
     }
 }

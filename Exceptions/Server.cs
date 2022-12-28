@@ -41,5 +41,9 @@ namespace Exceptions
                 }
             }
         }
+
+        public void RunCommandsWithDoubleRetryAndLog()
+        {
+        }
     }
 }
