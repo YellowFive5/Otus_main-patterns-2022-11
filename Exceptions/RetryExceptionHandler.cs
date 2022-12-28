@@ -19,6 +19,7 @@ namespace Exceptions
 
         public void Handle()
         {
+            commands.Enqueue(new RetryCommand(commandToRetry));
         }
     }
 }
