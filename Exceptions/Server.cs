@@ -44,6 +44,11 @@ namespace Exceptions
 
         public void RunCommandsWithDoubleRetryAndLog()
         {
+            while (Commands.Any())
+            {
+                var command = Commands.Dequeue();
+                command.Execute();
+            }
         }
     }
 }
