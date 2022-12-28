@@ -12,6 +12,10 @@ namespace Exceptions
 
         public void RunCommandsWithSingleRetryAndLog()
         {
+            foreach (var command in Commands)
+            {
+                command.Execute();
+            }
         }
     }
 }
