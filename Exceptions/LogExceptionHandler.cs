@@ -17,6 +17,7 @@ namespace Exceptions
 
         public void Handle()
         {
+            commands.Enqueue(new LogCommand());
         }
     }
 }
