@@ -1,6 +1,5 @@
 ﻿#region Usings
 
-using System;
 using Exceptions.Commands;
 
 #endregion
@@ -18,7 +17,10 @@ namespace Command
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            foreach (var command in commands)
+            {
+                command.Execute();
+            }
         }
     }
 }
