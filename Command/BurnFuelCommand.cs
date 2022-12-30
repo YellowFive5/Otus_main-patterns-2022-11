@@ -1,6 +1,5 @@
 ﻿#region Usings
 
-using System;
 using Exceptions.Commands;
 
 #endregion
@@ -18,7 +17,7 @@ namespace Command
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            toBurn.FuelLevel -= toBurn.FuelConsumption;
         }
     }
 }
