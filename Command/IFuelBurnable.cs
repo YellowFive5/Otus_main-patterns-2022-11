@@ -1,4 +1,4 @@
-﻿namespace Move
+﻿namespace Command
 {
     public interface IFuelBurnable
     {
