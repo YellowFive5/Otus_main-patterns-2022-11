@@ -1,6 +1,5 @@
 ﻿#region Usings
 
-using System;
 using Exceptions.Commands;
 
 #endregion
@@ -18,7 +17,10 @@ namespace Command
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            if (toCheck.FuelLevel < toCheck.FuelConsumption)
+            {
+                throw new NotEnoughFuelException();
+            }
         }
     }
 }
