@@ -1,16 +1,17 @@
 ﻿#region Usings
 
 using System;
+using Exceptions.Commands;
 
 #endregion
 
 namespace Move
 {
-    public class Rotate
+    public class RotateCommand : ICommand
     {
         private readonly IRotatable toRotate;
 
-        public Rotate(IRotatable toRotate)
+        public RotateCommand(IRotatable toRotate)
         {
             this.toRotate = toRotate;
         }

@@ -1,16 +1,17 @@
 ﻿#region Usings
 
 using System;
+using Exceptions.Commands;
 
 #endregion
 
 namespace Move
 {
-    public class Move
+    public class MoveCommand : ICommand
     {
         private readonly IMovable toMove;
 
-        public Move(IMovable toMove)
+        public MoveCommand(IMovable toMove)
         {
             this.toMove = toMove;
         }

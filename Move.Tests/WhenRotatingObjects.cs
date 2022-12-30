@@ -15,7 +15,7 @@ namespace Move.Tests
         public void ExceptionThrowsWhenRotatableObjectIsNull()
         {
             IRotatable objectToRotate = null;
-            var rotator = new Rotate(objectToRotate);
+            var rotator = new RotateCommand(objectToRotate);
 
             Action act = () => rotator.Execute();
 
@@ -31,7 +31,7 @@ namespace Move.Tests
             objectToRotate.SetupGet(o => o.Direction).Returns(startDir);
             objectToRotate.SetupGet(o => o.AngularVelocity).Returns(angVel);
             objectToRotate.SetupGet(o => o.Direction).Returns(dir);
-            var rotator = new Rotate(objectToRotate.Object);
+            var rotator = new RotateCommand(objectToRotate.Object);
 
             rotator.Execute();
 
