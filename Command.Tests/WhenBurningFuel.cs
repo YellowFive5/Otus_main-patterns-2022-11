@@ -1,5 +1,7 @@
 #region Usings
 
+using System;
+using FluentAssertions;
 using Moq;
 using NUnit.Framework;
 
@@ -9,6 +11,19 @@ namespace Command.Tests
 {
     public class WhenBurningFuel : TestBase
     {
+        [Test]
+        public void ExceptionThrowsWhenFuelBurnableObjectIsNull()
+        {
+            IFuelBurnable objectForFuelBurn = null;
+            var mover = new BurnFuelCommand(objectForFuelBurn);
+
+            Action act = () => mover.Execute();
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Can't burn object fuel");
+        }
+
         [Test]
         public void FuelBurns()
         {

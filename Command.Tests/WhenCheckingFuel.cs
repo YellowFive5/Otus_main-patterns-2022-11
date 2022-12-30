@@ -12,6 +12,19 @@ namespace Command.Tests
     public class WhenCheckingFuel : TestBase
     {
         [Test]
+        public void ExceptionThrowsWhenFuelBurnableObjectIsNull()
+        {
+            IFuelBurnable objectForFuelCheck = null;
+            var mover = new CheckFuelCommand(objectForFuelCheck);
+
+            Action act = () => mover.Execute();
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Can't check object fuel");
+        }
+
+        [Test]
         public void FuelChecksOkWhenFuelLevelEnoughForNextMoving()
         {
             var objectForFuelCheck = new Mock<IFuelBurnable>();
