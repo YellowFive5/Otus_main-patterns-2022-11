@@ -17,7 +17,6 @@ namespace Command.Tests
             var objectForFuelCheck = new Mock<IFuelBurnable>();
             objectForFuelCheck.SetupGet(o => o.FuelLevel).Returns(100);
             objectForFuelCheck.SetupGet(o => o.FuelConsumption).Returns(5);
-
             var fuelChecker = new CheckFuelCommand(objectForFuelCheck.Object);
 
             Action act = () => fuelChecker.Execute();
@@ -31,7 +30,6 @@ namespace Command.Tests
             var objectForFuelCheck = new Mock<IFuelBurnable>();
             objectForFuelCheck.SetupGet(o => o.FuelLevel).Returns(1);
             objectForFuelCheck.SetupGet(o => o.FuelConsumption).Returns(5);
-
             var fuelChecker = new CheckFuelCommand(objectForFuelCheck.Object);
 
             Action act = () => fuelChecker.Execute();
