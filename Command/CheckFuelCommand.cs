@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using Exceptions.Commands;
 
 #endregion
@@ -17,6 +18,11 @@ namespace Command
 
         public void Execute()
         {
+            if (toCheck == null)
+            {
+                throw new Exception("Can't check object fuel");
+            }
+
             if (toCheck.FuelLevel < toCheck.FuelConsumption)
             {
                 throw new NotEnoughFuelException();
