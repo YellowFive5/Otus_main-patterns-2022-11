@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using Exceptions.Commands;
 
 #endregion
@@ -19,7 +20,14 @@ namespace Command
         {
             foreach (var command in commands)
             {
-                command.Execute();
+                try
+                {
+                    command.Execute();
+                }
+                catch (Exception e)
+                {
+                    throw new CommandException();
+                }
             }
         }
     }
