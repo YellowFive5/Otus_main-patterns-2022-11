@@ -13,6 +13,37 @@ namespace Exceptions.Tests
     public class WhenImplementingRetryStrategy : TestBase
     {
         [Test]
+        public void CommandsRunsWhenNoExceptionsOnRunCommandsTillFirstException()
+        {
+            var succeededCommand1 = new Mock<ICommand>();
+            var succeededCommand2 = new Mock<ICommand>();
+            var commands = new Queue<ICommand>(new[] { succeededCommand1.Object, succeededCommand2.Object });
+            var server = new Server(commands, Logger.Object);
+
+            server.RunCommandsTillFirstException();
+
+            succeededCommand1.Verify(c => c.Execute(), Times.Once);
+            succeededCommand2.Verify(c => c.Execute(), Times.Once);
+        }
+
+        [Test]
+        public void CommandsRunsTillFirstExceptionsOnRunCommandsTillFirstException()
+        {
+            var succeededCommand1 = new Mock<ICommand>();
+            var failedCommand = new Mock<ICommand>();
+            var succeededCommand2 = new Mock<ICommand>();
+            failedCommand.Setup(fc => fc.Execute()).Throws(new Exception("Fails exception"));
+            var commands = new Queue<ICommand>(new[] { succeededCommand1.Object, failedCommand.Object, succeededCommand2.Object });
+            var server = new Server(commands, Logger.Object);
+
+            server.RunCommandsTillFirstException();
+
+            succeededCommand1.Verify(c => c.Execute(), Times.Once);
+            failedCommand.Verify(c => c.Execute(), Times.Once);
+            succeededCommand2.Verify(c => c.Execute(), Times.Never);
+        }
+
+        [Test]
         public void CommandsRunsWhenNoExceptionOnSingleRetry()
         {
             var succeededCommand1 = new Mock<ICommand>();

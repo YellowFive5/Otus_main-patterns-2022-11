@@ -21,6 +21,22 @@ namespace Exceptions
             this.logger = logger;
         }
 
+        public void RunCommandsTillFirstException()
+        {
+            while (Commands.Any())
+            {
+                var command = Commands.Dequeue();
+                try
+                {
+                    command.Execute();
+                }
+                catch (Exception)
+                {
+                    return;
+                }
+            }
+        }
+
         public void RunCommandsWithSingleRetryAndLog()
         {
             while (Commands.Any())

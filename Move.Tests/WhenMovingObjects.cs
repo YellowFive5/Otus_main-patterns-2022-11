@@ -18,7 +18,7 @@ namespace Move.Tests
             var objectToMove = new Mock<IMovable>();
             objectToMove.SetupGet(o => o.Position).Returns(new Vector2(posX, posY));
             objectToMove.SetupGet(o => o.Velocity).Returns(new Vector2(velX, velY));
-            var mover = new Move(objectToMove.Object);
+            var mover = new MoveCommand(objectToMove.Object);
 
             mover.Execute();
 
@@ -29,7 +29,7 @@ namespace Move.Tests
         public void ExceptionThrowsWhenMovableObjectIsNull()
         {
             IMovable objectToMove = null;
-            var mover = new Move(objectToMove);
+            var mover = new MoveCommand(objectToMove);
 
             Action act = () => mover.Execute();
 
@@ -49,7 +49,7 @@ namespace Move.Tests
             var objectToMove = new Mock<IMovable>();
             objectToMove.SetupGet(o => o.Position).Returns(new Vector2(posX, posY));
 
-            var mover = new Move(objectToMove.Object);
+            var mover = new MoveCommand(objectToMove.Object);
 
             Action act = () => mover.Execute();
 
@@ -68,7 +68,7 @@ namespace Move.Tests
         {
             var objectToMove = new Mock<IMovable>();
             objectToMove.SetupGet(o => o.Velocity).Returns(new Vector2(velX, velY));
-            var mover = new Move(objectToMove.Object);
+            var mover = new MoveCommand(objectToMove.Object);
 
             Action act = () => mover.Execute();
 
