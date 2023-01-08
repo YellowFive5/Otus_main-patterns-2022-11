@@ -1,5 +1,8 @@
 ﻿#region Usings
 
+using System;
+using System.Collections.Generic;
+using Exceptions;
 using Exceptions.Commands;
 using Moq;
 using NUnit.Framework;
@@ -14,11 +17,18 @@ namespace Command.Tests
         public void RepeatableCommandRepeatExecuting()
         {
             var commandToRepeat = new Mock<ICommand>();
-            var repeatableCommand = new RepeatableCommand(commandToRepeat.Object);
+            commandToRepeat.SetupSequence(c => c.Execute())
+                           .Pass()
+                           .Pass()
+                           .Throws(new Exception("Some exception"));
+            var commands = new Queue<ICommand>();
+            var repeatableCommand = new RepeatableCommand(commandToRepeat.Object, commands);
+            commands.Enqueue(repeatableCommand);
+            var server = new Server(commands, new Mock<ILogger>().Object);
 
-            repeatableCommand.Execute();
+            server.RunCommandsTillFirstException();
 
-            commandToRepeat.Verify(fc => fc.Execute(), Times.AtLeast(2));
+            commandToRepeat.Verify(fc => fc.Execute(), Times.Exactly(3));
         }
     }
 }
