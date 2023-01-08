@@ -19,4 +19,10 @@
 
 8_Команда
 
+* [Command](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Command)
+* [Command.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Command.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/3)
+
+9_Расширяемая фабрика и IoC
+
 ...
