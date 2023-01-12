@@ -4,7 +4,7 @@ using NUnit.Framework;
 
 #endregion
 
-namespace Fabric.Tests
+namespace Factory.Tests
 {
     public class TestBase
     {

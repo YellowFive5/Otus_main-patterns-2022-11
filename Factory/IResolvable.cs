@@ -4,7 +4,7 @@ using Exceptions.Commands;
 
 #endregion
 
-namespace Fabric
+namespace Factory
 {
     public interface IResolvable
     {

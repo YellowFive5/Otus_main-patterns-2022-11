@@ -24,11 +24,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Command", "Command\Command.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Command.Tests", "Command.Tests\Command.Tests.csproj", "{FD921BA0-CCE9-4CCC-A282-ED029F65CF01}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9_Fabric", "9_Fabric", "{ECC74CF7-BC42-4173-AD24-E9F286240C77}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9_Factory", "9_Factory", "{ECC74CF7-BC42-4173-AD24-E9F286240C77}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric", "Fabric\Fabric.csproj", "{B02DE70B-7692-4496-BDDA-2CF2C81394DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factory", "Factory\Factory.csproj", "{B02DE70B-7692-4496-BDDA-2CF2C81394DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fabric.Tests", "Fabric.Tests\Fabric.Tests.csproj", "{F7A8F9EB-8749-4D9A-804B-878DBBC546A3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Factory.Tests", "Factory.Tests\Factory.Tests.csproj", "{F7A8F9EB-8749-4D9A-804B-878DBBC546A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
