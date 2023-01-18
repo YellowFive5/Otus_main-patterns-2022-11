@@ -10,7 +10,7 @@ namespace Factory
     {
         public T Resolve<T>(string key, params object[] args)
         {
-            throw new NotImplementedException();
+            throw new Exception($"No operation with key {key}");
         }
     }
 }
