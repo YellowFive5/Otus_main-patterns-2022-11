@@ -1,7 +1,11 @@
 ﻿#region Usings
 
 using System;
+using Command;
+using Exceptions.Commands;
 using FluentAssertions;
+using Moq;
+using Move;
 using NUnit.Framework;
 
 #endregion
@@ -21,6 +25,18 @@ namespace Factory.Tests
             act.Should()
                .Throw<Exception>()
                .WithMessage($"No operation with key {operationName}");
+        }
+
+        [Test]
+        public void MoveCommandRegistersAndResolves()
+        {
+            var ioc = new IoC();
+            var objectToMove = new Mock<IMovable>();
+
+            ioc.Resolve<ICommand>("IoC.Register", "Move", objectToMove).Execute();
+            var moveCommand = ioc.Resolve<ICommand>("Move", objectToMove);
+
+            moveCommand.Should().BeOfType<MacroCommand>();
         }
     }
 }
