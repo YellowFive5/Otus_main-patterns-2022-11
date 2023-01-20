@@ -28,7 +28,7 @@ namespace Factory
                 throw new Exception($"Scope {scopeIdToSet} not registered");
             }
 
-            ioC.CurrentScope = scopeToSet;
+            ioC.CurrentScope.Value = scopeToSet;
         }
     }
 }

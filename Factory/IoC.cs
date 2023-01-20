@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Threading;
 
 #endregion
 
@@ -10,7 +11,7 @@ namespace Factory
     public class IoC : IResolvable
     {
         public ConcurrentDictionary<string, Scope> Scopes { get; } = new();
-        public Scope CurrentScope { get; set; } = new("DefaultScope");
+        public ThreadLocal<Scope> CurrentScope { get; } = new() { Value = new Scope("DefaultScope") };
 
         public T Resolve<T>(string key, params object[] args)
         {
@@ -30,16 +31,16 @@ namespace Factory
 
             if (key == "IoC.Register")
             {
-                return new IocRegisterCommand(CurrentScope.Dependencies,
+                return new IocRegisterCommand(CurrentScope.Value?.Dependencies,
                                               args[0] as string,
                                               args[1] as Func<object[], object>) is T command
                            ? command
                            : default;
             }
 
-            if (key != null && CurrentScope.Dependencies.ContainsKey(key))
+            if (CurrentScope.Value != null && key != null && CurrentScope.Value.Dependencies.ContainsKey(key))
             {
-                var function = (Func<object[], object>)CurrentScope.Dependencies[key];
+                var function = (Func<object[], object>)CurrentScope.Value.Dependencies[key];
                 return (T)function.Invoke(args);
             }
 
