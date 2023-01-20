@@ -23,9 +23,7 @@ namespace Factory
 
             if (key == "Scopes.Current")
             {
-                var scope = Scopes[args[0].ToString()];
-                CurrentScope = scope;
-                return new ScopeCurrentSetCommand(this, scope) is T command
+                return new ScopeCurrentSetCommand(this, Scopes, args[0].ToString()) is T command
                            ? command
                            : default;
             }
