@@ -36,13 +36,13 @@ namespace Factory.Tests
 
             ioc.Resolve<ICommand>("IoC.Register",
                                   "Move",
-                                  (Func<object[], object>)(args => new MacroCommand(new CheckFuelCommand(args[0].As<IFuelBurnable>()),
-                                                                                    new MoveCommand(args[0].As<IMovable>()),
-                                                                                    new BurnFuelCommand(args[0].As<IFuelBurnable>())))
+                                  (Func<object[], object>)(args => new MacroCommand(new CheckFuelCommand((IFuelBurnable)args[0]),
+                                                                                    new MoveCommand((IMovable)args[0]),
+                                                                                    new BurnFuelCommand((IFuelBurnable)args[0])))
                                  )
                .Execute();
 
-            var moveCommand = ioc.Resolve<ICommand>("Move", objectToMoveAndBurn);
+            var moveCommand = ioc.Resolve<ICommand>("Move", objectToMoveAndBurn.Object);
 
             moveCommand.Should().BeOfType<MacroCommand>();
         }

@@ -26,8 +26,7 @@ namespace Factory
             if (key != null && dependencies.ContainsKey(key))
             {
                 var function = (Func<object[], object>)dependencies[key];
-                var pars = function.Method.GetParameters();
-                return (T)function.Invoke(pars);
+                return (T)function.Invoke(args);
             }
 
             throw new Exception($"No operation with key {key}");
