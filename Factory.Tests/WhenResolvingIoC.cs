@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System;
+using System.Linq;
 using Command;
 using Exceptions.Commands;
 using FluentAssertions;
@@ -45,6 +46,19 @@ namespace Factory.Tests
             var moveCommand = ioc.Resolve<ICommand>("Move", objectToMoveAndBurn.Object);
 
             moveCommand.Should().BeOfType<MacroCommand>();
+        }
+
+        [Test]
+        public void ScopeRegisters()
+        {
+            var ioc = new IoC();
+
+            ioc.Scopes.Count.Should().Be(0);
+
+            ioc.Resolve<ICommand>("Scopes.New", "id_1")
+               .Execute();
+
+            ioc.Scopes.Count.Should().Be(1);
         }
     }
 }

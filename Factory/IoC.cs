@@ -9,7 +9,7 @@ namespace Factory
 {
     public class IoC : IResolvable
     {
-        public ConcurrentDictionary<string, Scope> Scopes { get; set; } = new();
+        public ConcurrentDictionary<string, Scope> Scopes { get; } = new();
         private static Scope CurrentScope { get; } = new();
 
         public T Resolve<T>(string key, params object[] args)
