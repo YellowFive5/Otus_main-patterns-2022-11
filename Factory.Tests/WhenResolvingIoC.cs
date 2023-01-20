@@ -61,5 +61,20 @@ namespace Factory.Tests
             ioc.Scopes.Count.Should().Be(1);
             ioc.Scopes.First().Value.Name.Should().Be("id_1");
         }
+
+        [Test]
+        public void ErrorThrowsWhenTryToRegisterDuplicatedScope()
+        {
+            var ioc = new IoC();
+
+            ioc.Resolve<ICommand>("Scopes.New", "id_1")
+               .Execute();
+            Action act = () => ioc.Resolve<ICommand>("Scopes.New", "id_1")
+                                  .Execute();
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Scope id_1 already registered.");
+        }
     }
 }
