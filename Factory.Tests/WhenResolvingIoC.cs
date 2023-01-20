@@ -32,9 +32,17 @@ namespace Factory.Tests
         {
             var ioc = new IoC();
             var objectToMove = new Mock<IMovable>();
+            var objectToMoveAndBurn = objectToMove.As<IFuelBurnable>();
 
-            ioc.Resolve<ICommand>("IoC.Register", "Move", objectToMove).Execute();
-            var moveCommand = ioc.Resolve<ICommand>("Move", objectToMove);
+            ioc.Resolve<ICommand>("IoC.Register",
+                                  "Move",
+                                  (Func<object[], object>)(args => new MacroCommand(new CheckFuelCommand(args[0].As<IFuelBurnable>()),
+                                                                                    new MoveCommand(args[0].As<IMovable>()),
+                                                                                    new BurnFuelCommand(args[0].As<IFuelBurnable>())))
+                                 )
+               .Execute();
+
+            var moveCommand = ioc.Resolve<ICommand>("Move", objectToMoveAndBurn);
 
             moveCommand.Should().BeOfType<MacroCommand>();
         }
