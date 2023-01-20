@@ -76,5 +76,20 @@ namespace Factory.Tests
                .Throw<Exception>()
                .WithMessage("Scope id_1 already registered");
         }
+
+        [Test]
+        public void RegisteredScopeSetsAsCurrent()
+        {
+            var ioc = new IoC();
+
+            ioc.CurrentScope.Name.Should().Be("DefaultScope");
+
+            ioc.Resolve<ICommand>("Scopes.New", "id_1")
+               .Execute();
+            ioc.Resolve<ICommand>("Scopes.Current", "id_1")
+               .Execute();
+
+            ioc.CurrentScope.Name.Should().Be("id_1");
+        }
     }
 }
