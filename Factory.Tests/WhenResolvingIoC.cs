@@ -91,5 +91,18 @@ namespace Factory.Tests
 
             ioc.CurrentScope.Name.Should().Be("id_1");
         }
+
+        [Test]
+        public void ErrorThrowsWhenTryingSetNotRegisteredScope()
+        {
+            var ioc = new IoC();
+
+            Action act = () => ioc.Resolve<ICommand>("Scopes.Current", "id_1")
+                                  .Execute();
+
+            act.Should()
+               .Throw<Exception>()
+               .WithMessage("Scope id_1 not registered");
+        }
     }
 }
