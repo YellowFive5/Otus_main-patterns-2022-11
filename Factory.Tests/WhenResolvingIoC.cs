@@ -2,6 +2,7 @@
 
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Command;
 using Exceptions.Commands;
 using FluentAssertions;
@@ -82,14 +83,14 @@ namespace Factory.Tests
         {
             var ioc = new IoC();
 
-            ioc.CurrentScope.Name.Should().Be("DefaultScope");
+            ioc.CurrentScope.Value?.Name.Should().Be("DefaultScope");
 
             ioc.Resolve<ICommand>("Scopes.New", "id_1")
                .Execute();
             ioc.Resolve<ICommand>("Scopes.Current", "id_1")
                .Execute();
 
-            ioc.CurrentScope.Name.Should().Be("id_1");
+            ioc.CurrentScope.Value?.Name.Should().Be("id_1");
         }
 
         [Test]
@@ -103,6 +104,33 @@ namespace Factory.Tests
             act.Should()
                .Throw<Exception>()
                .WithMessage("Scope id_1 not registered");
+        }
+
+        [Test]
+        public void CurrentScopeSetsForEachThread()
+        {
+            var ioc = new IoC();
+
+            ioc.Resolve<ICommand>("Scopes.New", "id_1")
+               .Execute();
+            ioc.Resolve<ICommand>("Scopes.New", "id_2")
+               .Execute();
+
+            Task.Factory.StartNew(() =>
+                                  {
+                                      ioc.Resolve<ICommand>("Scopes.Current", "id_1")
+                                         .Execute();
+
+                                      ioc.CurrentScope.Value?.Name.Should().Be("id_1");
+                                  });
+            Task.Factory.StartNew(() =>
+                                  {
+                                      ioc.Resolve<ICommand>("Scopes.Current", "id_2")
+                                         .Execute();
+
+                                      ioc.CurrentScope.Value?.Name.Should().Be("id_2");
+                                  });
+            ioc.CurrentScope.Value?.Name.Should().Be("DefaultScope");
         }
     }
 }
