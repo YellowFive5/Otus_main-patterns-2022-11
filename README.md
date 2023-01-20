@@ -25,4 +25,10 @@
 
 9_Расширяемая фабрика и IoC
 
+* [Factory](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Factory)
+* [Factory.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Factory.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/4)
+
+12_Адаптер и мост
+
 ...
