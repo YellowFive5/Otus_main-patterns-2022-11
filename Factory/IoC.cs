@@ -10,24 +10,31 @@ namespace Factory
     public class IoC : IResolvable
     {
         public ConcurrentDictionary<string, Scope> Scopes { get; } = new();
-        public Scope CurrentScope { get; } = new("DefaultScope");
+        public Scope CurrentScope { get; set; } = new("DefaultScope");
 
         public T Resolve<T>(string key, params object[] args)
         {
             if (key == "Scopes.New")
             {
-                var scopeRegisterCommand = new ScopeRegisterCommand(Scopes, args[0].ToString());
-                return scopeRegisterCommand is T command
+                return new ScopeRegisterCommand(Scopes, args[0].ToString()) is T command
+                           ? command
+                           : default;
+            }
+
+            if (key == "Scopes.Current")
+            {
+                var scope = Scopes[args[0].ToString()];
+                CurrentScope = scope;
+                return new ScopeCurrentSetCommand(this, scope) is T command
                            ? command
                            : default;
             }
 
             if (key == "IoC.Register")
             {
-                var registerCommand = new IocRegisterCommand(CurrentScope.Dependencies,
-                                                             args[0] as string,
-                                                             args[1] as Func<object[], object>);
-                return registerCommand is T command
+                return new IocRegisterCommand(CurrentScope.Dependencies,
+                                              args[0] as string,
+                                              args[1] as Func<object[], object>) is T command
                            ? command
                            : default;
             }
