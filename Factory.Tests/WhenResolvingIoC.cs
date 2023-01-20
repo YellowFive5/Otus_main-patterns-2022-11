@@ -74,7 +74,7 @@ namespace Factory.Tests
 
             act.Should()
                .Throw<Exception>()
-               .WithMessage("Scope id_1 already registered.");
+               .WithMessage("Scope id_1 already registered");
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System;
 using System.Collections.Concurrent;
 using Exceptions.Commands;
 
@@ -20,7 +21,10 @@ namespace Factory
 
         public void Execute()
         {
-            scopesCollection.TryAdd(scopeName, new Scope(scopeName));
+            if (!scopesCollection.TryAdd(scopeName, new Scope(scopeName)))
+            {
+                throw new Exception($"Scope {scopeName} already registered");
+            }
         }
     }
 }
