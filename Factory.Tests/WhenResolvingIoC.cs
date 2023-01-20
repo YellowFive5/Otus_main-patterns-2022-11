@@ -59,6 +59,7 @@ namespace Factory.Tests
                .Execute();
 
             ioc.Scopes.Count.Should().Be(1);
+            ioc.Scopes.First().Value.Name.Should().Be("id_1");
         }
     }
 }
