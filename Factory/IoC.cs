@@ -1,7 +1,7 @@
 ﻿#region Usings
 
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 #endregion
 
@@ -9,13 +9,14 @@ namespace Factory
 {
     public class IoC : IResolvable
     {
-        private IDictionary<string, object> dependencies { get; } = new Dictionary<string, object>();
+        public ConcurrentDictionary<string, Scope> Scopes { get; set; } = new();
+        private static Scope CurrentScope { get; } = new();
 
         public T Resolve<T>(string key, params object[] args)
         {
             if (key == "IoC.Register")
             {
-                var registerCommand = new IocRegisterCommand(dependencies,
+                var registerCommand = new IocRegisterCommand(CurrentScope.Dependencies,
                                                              args[0] as string,
                                                              args[1] as Func<object[], object>);
                 return registerCommand is T command
@@ -23,9 +24,9 @@ namespace Factory
                            : default;
             }
 
-            if (key != null && dependencies.ContainsKey(key))
+            if (key != null && CurrentScope.Dependencies.ContainsKey(key))
             {
-                var function = (Func<object[], object>)dependencies[key];
+                var function = (Func<object[], object>)CurrentScope.Dependencies[key];
                 return (T)function.Invoke(args);
             }
 
