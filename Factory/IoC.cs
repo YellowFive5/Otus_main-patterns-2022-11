@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Numerics;
 using System.Reflection;
 using System.Threading;
 using Move;
@@ -17,6 +18,13 @@ namespace Factory
 
         public T Resolve<T>(string key, params object[] args)
         {
+            if (key == "Object.SetPosition")
+            {
+                return new SetObjectPositionCommand((IMovable)args[0], (Vector2)args[1]) is T command
+                           ? command
+                           : default;
+            }
+
             if (key == "Object.GetVelocity")
             {
                 return ((IMovable)args[0]).Velocity is T velocity
