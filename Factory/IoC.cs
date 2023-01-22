@@ -17,6 +17,13 @@ namespace Factory
 
         public T Resolve<T>(string key, params object[] args)
         {
+            if (key == "Object.GetPosition")
+            {
+                return ((IMovable)args[0]).Position is T position
+                           ? position
+                           : default;
+            }
+
             if (key == "Adapter")
             {
                 switch (((TypeInfo)args[0]).Name)
