@@ -46,5 +46,19 @@ namespace Adapter.Tests
 
             adapter.Velocity.Should().Be(new Vector2(-7, 3));
         }
+
+        [Test]
+        public void PositionSetsWithMovableAdapter()
+        {
+            IResolvable ioc = new IoC();
+            var objectToMove = new Mock<IMovable>();
+            objectToMove.SetupProperty(o => o.Position);
+            objectToMove.Object.Position = new Vector2(12, 5);
+            var adapter = ioc.Resolve<IMovable>("Adapter", typeof(IMovable), objectToMove.Object);
+
+            adapter.Position = new Vector2(1, 2);
+
+            adapter.Position.Should().Be(new Vector2(1, 2));
+        }
     }
 }
