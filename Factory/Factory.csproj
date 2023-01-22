@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Exceptions.Tests\Exceptions.Tests.csproj" />
+      <ProjectReference Include="..\Move\Move.csproj" />
     </ItemGroup>
 
 </Project>

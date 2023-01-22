@@ -13,7 +13,7 @@ namespace Adapter.Tests
     public class WhenResolvingAdapters : TestBase
     {
         [Test]
-        public void MovableAdapterGenerates()
+        public void MovableAdapterResolves()
         {
             IResolvable ioc = new IoC();
             var objectToMove = new Mock<IMovable>();
