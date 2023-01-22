@@ -17,6 +17,13 @@ namespace Factory
 
         public T Resolve<T>(string key, params object[] args)
         {
+            if (key == "Object.GetVelocity")
+            {
+                return ((IMovable)args[0]).Velocity is T velocity
+                           ? velocity
+                           : default;
+            }
+
             if (key == "Object.GetPosition")
             {
                 return ((IMovable)args[0]).Position is T position
