@@ -32,3 +32,15 @@
 12_Адаптер и мост
 
 ...
+
+14_Проблема вертикального масштабирования и синхронизация
+
+* [Multithreading](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Multithreading)
+* [Multithreading.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Multithreading.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/5)
+
+16_Системы обмена сообщениями
+
+...
+
+
