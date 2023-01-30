@@ -29,5 +29,24 @@ namespace Multithreading.Tests
 
             mre.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
         }
+
+        [Test]
+        public void ExecutionStopsAfterHardStopCommand()
+        {
+            var testCommand1 = new Mock<ICommand>();
+            var testCommand2 = new Mock<ICommand>();
+            var hardStopCommand = new HardStopCommand();
+            var queue = new ConcurrentQueue<ICommand>();
+            queue.Enqueue(testCommand1.Object);
+            queue.Enqueue(hardStopCommand);
+            queue.Enqueue(testCommand2.Object);
+            var server = new Server(queue, Logger.Object);
+            
+            server.RunMultithreadCommands();
+            
+            server.StopMultithread.Should().BeTrue();
+            testCommand1.Verify(fc => fc.Execute(), Times.Once);
+            testCommand2.Verify(fc => fc.Execute(), Times.Never);
+        }
     }
 }

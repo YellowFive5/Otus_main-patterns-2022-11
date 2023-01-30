@@ -16,6 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
+      <ProjectReference Include="..\Multithreading\Multithreading.csproj" />
     </ItemGroup>
 
 </Project>
