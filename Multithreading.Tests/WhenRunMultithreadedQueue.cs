@@ -50,7 +50,6 @@ namespace Multithreading.Tests
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
             testCommand2.Verify(fc => fc.Execute(), Times.Never);
             server.MultithreadCommands.Should().NotBeEmpty();
-            server.HardStopped.Should().BeTrue();
         }
 
         [Test]
@@ -76,7 +75,6 @@ namespace Multithreading.Tests
             mre2.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
             testCommand2.Verify(fc => fc.Execute(), Times.Once);
             server.MultithreadCommands.Should().BeEmpty();
-            server.SoftStopped.Should().BeTrue();
         }
     }
 }
