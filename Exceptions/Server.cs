@@ -103,13 +103,14 @@ namespace Exceptions
             this.logger = logger;
         }
 
-        public bool StopMultithread { get; set; }
+        public bool HardStopped { get; private set; }
+        public bool SoftStopped { get; private set; }
 
         public void RunMultithreadCommands()
         {
             Task.Factory.StartNew(() =>
                                   {
-                                      while (!StopMultithread)
+                                      while (!HardStopped || (!SoftStopped && !MultithreadCommands.Any()))
                                       {
                                           try
                                           {
@@ -118,7 +119,11 @@ namespace Exceptions
                                           }
                                           catch (HardStopException)
                                           {
-                                              StopMultithread = true;
+                                              HardStopped = true;
+                                          }
+                                          catch (SoftStopException)
+                                          {
+                                              SoftStopped = true;
                                           }
                                           catch (Exception)
                                           {
