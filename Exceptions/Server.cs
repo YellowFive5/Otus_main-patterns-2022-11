@@ -1,8 +1,10 @@
 ﻿#region Usings
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Exceptions.Commands;
 using Exceptions.Handlers;
 
@@ -12,6 +14,8 @@ namespace Exceptions
 {
     public class Server
     {
+        #region Simple
+
         public Queue<ICommand> Commands { get; }
         private readonly ILogger logger;
 
@@ -86,5 +90,40 @@ namespace Exceptions
                 }
             }
         }
+
+        #endregion
+
+        #region Multithreading
+
+        public ConcurrentQueue<ICommand> MultithreadCommands { get; }
+
+        public Server(ConcurrentQueue<ICommand> multithreadCommands, ILogger logger)
+        {
+            MultithreadCommands = multithreadCommands;
+            this.logger = logger;
+        }
+
+        public bool StopMultithread { get; set; }
+
+        public void RunMultithreadCommands()
+        {
+            Task.Factory.StartNew(() =>
+                                  {
+                                      while (!StopMultithread)
+                                      {
+                                          try
+                                          {
+                                              MultithreadCommands.TryDequeue(out var command);
+                                              command?.Execute();
+                                          }
+                                          catch (Exception)
+                                          {
+                                              // continue
+                                          }
+                                      }
+                                  });
+        }
+
+        #endregion
     }
 }
