@@ -48,5 +48,31 @@ namespace Multithreading.Tests
             testCommand2.Verify(fc => fc.Execute(), Times.Never);
             server.StopMultithread.Should().BeTrue();
         }
+
+        [Test]
+        public void ExecutionStopsAfterAllCommandsCompleteAfterSoftStopCommand()
+        {
+            var testCommand1 = new Mock<ICommand>();
+            var mre1 = new ManualResetEvent(false);
+            testCommand1.Setup(c => c.Execute()).Callback(() => mre1.Set());
+            var testCommand2 = new Mock<ICommand>();
+            var mre2 = new ManualResetEvent(false);
+            testCommand2.Setup(c => c.Execute()).Callback(() => mre2.Set());
+            var softStopCommand = new SoftStopCommand();
+            var queue = new ConcurrentQueue<ICommand>();
+            queue.Enqueue(testCommand1.Object);
+            queue.Enqueue(softStopCommand);
+            queue.Enqueue(testCommand2.Object);
+            var server = new Server(queue, Logger.Object);
+
+            server.RunMultithreadCommands();
+
+            mre1.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
+            testCommand1.Verify(fc => fc.Execute(), Times.Once);
+            mre2.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
+            testCommand2.Verify(fc => fc.Execute(), Times.Once);
+            server.MultithreadCommands.Should().BeEmpty();
+            server.SoftStopped.Should().BeTrue();
+        }
     }
 }
