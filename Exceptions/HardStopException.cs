@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace Multithreading
+namespace Exceptions
 {
     public class HardStopException : Exception
     {

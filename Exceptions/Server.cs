@@ -116,6 +116,10 @@ namespace Exceptions
                                               MultithreadCommands.TryDequeue(out var command);
                                               command?.Execute();
                                           }
+                                          catch (HardStopException)
+                                          {
+                                              StopMultithread = true;
+                                          }
                                           catch (Exception)
                                           {
                                               // continue

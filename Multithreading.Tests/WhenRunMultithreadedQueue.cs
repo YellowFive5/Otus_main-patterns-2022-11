@@ -44,9 +44,9 @@ namespace Multithreading.Tests
             
             server.RunMultithreadCommands();
             
-            server.StopMultithread.Should().BeTrue();
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
             testCommand2.Verify(fc => fc.Execute(), Times.Never);
+            server.StopMultithread.Should().BeTrue();
         }
     }
 }

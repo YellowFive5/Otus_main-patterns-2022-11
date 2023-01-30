@@ -1,4 +1,5 @@
 ﻿
+using Exceptions;
 using Exceptions.Commands;
 
 namespace Multithreading
