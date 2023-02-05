@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Command;
 using Exceptions.Commands;
 using Exceptions.Handlers;
 using FluentAssertions;

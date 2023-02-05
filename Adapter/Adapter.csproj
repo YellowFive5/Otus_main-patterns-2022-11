@@ -5,8 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Factory\Factory.csproj" />
-      <ProjectReference Include="..\Move\Move.csproj" />
+        <ProjectReference Include="..\Factory\Factory.csproj"/>
+        <ProjectReference Include="..\Move\Move.csproj"/>
     </ItemGroup>
 
 </Project>

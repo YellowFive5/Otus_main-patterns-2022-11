@@ -5,8 +5,11 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Command;
 using Exceptions.Commands;
 using Exceptions.Handlers;
+using Factory;
+using MessageBroker;
 
 #endregion
 
@@ -97,7 +100,7 @@ namespace Exceptions
 
         public ConcurrentQueue<ICommand> MultithreadCommands { get; }
 
-        public Server(ConcurrentQueue<ICommand> multithreadCommands, ILogger logger)
+        public Server(IResolvable ioc, ConcurrentQueue<ICommand> multithreadCommands, ILogger logger)
         {
             MultithreadCommands = multithreadCommands;
             this.logger = logger;
@@ -134,5 +137,10 @@ namespace Exceptions
         }
 
         #endregion
+
+        public void OnMessageReceived(Message message)
+        {
+            var command = new InterpretCommand(message);
+        }
     }
 }

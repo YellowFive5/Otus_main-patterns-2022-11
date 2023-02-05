@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using Exceptions;
-using Exceptions.Commands;
 using Moq;
 using NUnit.Framework;
 

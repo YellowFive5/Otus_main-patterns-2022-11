@@ -1,7 +1,7 @@
 ﻿#region Usings
 
 using System.Numerics;
-using Exceptions.Commands;
+using Command;
 using Move;
 
 #endregion

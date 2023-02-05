@@ -3,8 +3,8 @@
 using System;
 using System.Collections.Concurrent;
 using System.Threading;
+using Command;
 using Exceptions;
-using Exceptions.Commands;
 using FluentAssertions;
 using Moq;
 using NUnit.Framework;
@@ -23,7 +23,7 @@ namespace Multithreading.Tests
             testCommand.Setup(c => c.Execute()).Callback(() => mre.Set());
             var queue = new ConcurrentQueue<ICommand>();
             queue.Enqueue(testCommand.Object);
-            var server = new Server(queue, Logger.Object);
+            var server = new Server(Ioc.Object, queue, Logger.Object);
 
             server.RunMultithreadCommands();
 
@@ -42,7 +42,7 @@ namespace Multithreading.Tests
             queue.Enqueue(testCommand1.Object);
             queue.Enqueue(hardStopCommand);
             queue.Enqueue(testCommand2.Object);
-            var server = new Server(queue, Logger.Object);
+            var server = new Server(Ioc.Object, queue, Logger.Object);
 
             server.RunMultithreadCommands();
 
@@ -66,7 +66,7 @@ namespace Multithreading.Tests
             queue.Enqueue(testCommand1.Object);
             queue.Enqueue(softStopCommand);
             queue.Enqueue(testCommand2.Object);
-            var server = new Server(queue, Logger.Object);
+            var server = new Server(Ioc.Object, queue, Logger.Object);
 
             server.RunMultithreadCommands();
 

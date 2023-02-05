@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
-using Exceptions.Commands;
+using Command;
 
 #endregion
 

@@ -1,5 +1,6 @@
 #region Usings
 
+using Command;
 using Exceptions.Commands;
 using Moq;
 using NUnit.Framework;

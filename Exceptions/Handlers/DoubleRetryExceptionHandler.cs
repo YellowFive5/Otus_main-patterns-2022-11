@@ -1,6 +1,7 @@
 ﻿#region Usings
 
 using System.Collections.Generic;
+using Command;
 using Exceptions.Commands;
 
 #endregion

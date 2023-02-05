@@ -1,7 +1,7 @@
 ﻿#region Usings
 
 using System;
-using Exceptions.Commands;
+using Command;
 
 #endregion
 
