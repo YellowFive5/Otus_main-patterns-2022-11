@@ -98,49 +98,55 @@ namespace Exceptions
 
         #region Multithreading
 
-        public ConcurrentQueue<ICommand> MultithreadCommands { get; }
+        public Dictionary<int, ConcurrentQueue<ICommand>> Games { get; }
+        private readonly IResolvable ioc;
 
-        public Server(IResolvable ioc, ConcurrentQueue<ICommand> multithreadCommands, ILogger logger)
+        public Server(IResolvable ioc, ConcurrentQueue<ICommand> gameCommands, ILogger logger)
         {
-            MultithreadCommands = multithreadCommands;
+            Games = new Dictionary<int, ConcurrentQueue<ICommand>> { { 1, gameCommands } };
+            this.ioc = ioc;
             this.logger = logger;
         }
 
-        public bool HardStopped { get; private set; }
-        public bool SoftStopped { get; private set; }
+        private bool HardStopped { get; set; }
+        private bool SoftStopped { get; set; }
 
         public void RunMultithreadCommands()
         {
-            Task.Factory.StartNew(() =>
-                                  {
-                                      while (!HardStopped || (!SoftStopped && !MultithreadCommands.Any()))
+            foreach (var game in Games)
+            {
+                Task.Factory.StartNew(() =>
                                       {
-                                          try
+                                          while (!HardStopped || (!SoftStopped && !game.Value.Any()))
                                           {
-                                              MultithreadCommands.TryDequeue(out var command);
-                                              command?.Execute();
+                                              try
+                                              {
+                                                  game.Value.TryDequeue(out var command);
+                                                  command?.Execute();
+                                              }
+                                              catch (HardStopException)
+                                              {
+                                                  HardStopped = true;
+                                              }
+                                              catch (SoftStopException)
+                                              {
+                                                  SoftStopped = true;
+                                              }
+                                              catch (Exception)
+                                              {
+                                                  // continue
+                                              }
                                           }
-                                          catch (HardStopException)
-                                          {
-                                              HardStopped = true;
-                                          }
-                                          catch (SoftStopException)
-                                          {
-                                              SoftStopped = true;
-                                          }
-                                          catch (Exception)
-                                          {
-                                              // continue
-                                          }
-                                      }
-                                  });
+                                      });
+            }
         }
 
         #endregion
 
         public void OnMessageReceived(Message message)
         {
-            var command = new InterpretCommand(message);
+            new InterpretCommand(message, Games, ioc)
+                .Execute();
         }
     }
 }

@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Threading;
 using Command;
 using Exceptions;
@@ -49,7 +50,7 @@ namespace Multithreading.Tests
             mre.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
             testCommand2.Verify(fc => fc.Execute(), Times.Never);
-            server.MultithreadCommands.Should().NotBeEmpty();
+            server.Games.First().Value.Should().NotBeEmpty();
         }
 
         [Test]
@@ -74,7 +75,7 @@ namespace Multithreading.Tests
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
             mre2.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
             testCommand2.Verify(fc => fc.Execute(), Times.Once);
-            server.MultithreadCommands.Should().BeEmpty();
+            server.Games.First().Value.Should().BeEmpty();
         }
     }
 }
