@@ -31,7 +31,8 @@
 
 12_Адаптер и мост
 
-...
+* [Adapter.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Adapter.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/6)
 
 14_Проблема вертикального масштабирования и синхронизация
 
