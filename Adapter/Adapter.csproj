@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Exceptions.Tests\Exceptions.Tests.csproj" />
+      <ProjectReference Include="..\Factory\Factory.csproj" />
       <ProjectReference Include="..\Move\Move.csproj" />
     </ItemGroup>
 
