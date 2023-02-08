@@ -21,7 +21,6 @@ namespace MessageBroker.Tests
         {
             var objectToMove = new Mock<IMovable>();
             objectToMove.SetupGet(o => o.Position).Returns(new Vector2(12, 5));
-            objectToMove.SetupGet(o => o.Velocity).Returns(new Vector2(-7, 3));
 
             var ioc = new IoC();
             ioc.Resolve<ICommand>("IoC.Register",
@@ -29,8 +28,8 @@ namespace MessageBroker.Tests
                                   (Func<object[], object>)(_ => objectToMove.Object)
                                  ).Execute();
             ioc.Resolve<ICommand>("IoC.Register",
-                                  "Commands.Move",
-                                  (Func<object[], object>)(args => new MoveCommand((IMovable)args[0]))
+                                  "Commands.MoveWithVelocity",
+                                  (Func<object[], object>)(args => new MoveWithVelocityCommand((IMovable)args[0], (Vector2)args[1]))
                                  ).Execute();
 
             var server = new Server(ioc, new ConcurrentQueue<ICommand>(), Logger.Object);
@@ -40,13 +39,13 @@ namespace MessageBroker.Tests
                           {
                               GameId = 1,
                               ObjectId = "Objects.Movable_548",
-                              OperationId = "Commands.Move",
+                              OperationId = "Commands.MoveWithVelocity",
                               ArgsJson = "2"
                           };
 
             server.OnMessageReceived(message);
 
-            objectToMove.VerifySet(o => o.Position = new Vector2(5, 8));
+            objectToMove.VerifySet(o => o.Position = new Vector2(14, 7));
         }
     }
 }

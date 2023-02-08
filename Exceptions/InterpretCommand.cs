@@ -2,6 +2,7 @@
 
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Numerics;
 using Command;
 using Factory;
 using MessageBroker;
@@ -28,8 +29,8 @@ namespace Exceptions
         {
             var gameQueue = games[message.GameId];
             var gameObject = ioc.Resolve<IMovable>(message.ObjectId);
-            // todo setup velocity ?
-            var command = ioc.Resolve<ICommand>(message.OperationId, gameObject);
+            var velocity = float.Parse(message.ArgsJson);
+            var command = ioc.Resolve<ICommand>(message.OperationId, gameObject, new Vector2(velocity));
             gameQueue.Enqueue(command);
         }
     }
