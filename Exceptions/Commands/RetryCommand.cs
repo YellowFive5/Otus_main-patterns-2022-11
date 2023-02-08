@@ -2,6 +2,12 @@
 
 #endregion
 
+#region Usings
+
+using Command;
+
+#endregion
+
 namespace Exceptions.Commands
 {
     public class RetryCommand : ICommand

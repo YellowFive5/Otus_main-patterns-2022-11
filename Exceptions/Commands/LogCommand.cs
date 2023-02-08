@@ -1,23 +1,29 @@
 ﻿#region Usings
 
-using Exceptions;
-using Exceptions.Commands;
+#endregion
+
+#region Usings
+
+using Command;
 
 #endregion
 
-public class LogCommand : ICommand
+namespace Exceptions.Commands
 {
-    private readonly ILogger logger;
-    private readonly string message;
-
-    public LogCommand(ILogger logger, string message)
+    public class LogCommand : ICommand
     {
-        this.logger = logger;
-        this.message = message;
-    }
+        private readonly ILogger logger;
+        private readonly string message;
 
-    public void Execute()
-    {
-        logger.Log(message);
+        public LogCommand(ILogger logger, string message)
+        {
+            this.logger = logger;
+            this.message = message;
+        }
+
+        public void Execute()
+        {
+            logger.Log(message);
+        }
     }
 }

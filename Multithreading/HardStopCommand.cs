@@ -1,6 +1,9 @@
-﻿
+﻿#region Usings
+
+using Command;
 using Exceptions;
-using Exceptions.Commands;
+
+#endregion
 
 namespace Multithreading
 {
