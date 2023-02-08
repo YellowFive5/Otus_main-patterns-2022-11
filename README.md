@@ -42,6 +42,10 @@
 
 16_Системы обмена сообщениями
 
+* [MessageBroker](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/MessageBroker)
+* [MessageBroker.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/MessageBroker.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/7)
+
+19_Создание микросервиса // ДЗ
+
 ...
-
-
