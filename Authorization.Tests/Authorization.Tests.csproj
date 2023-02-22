@@ -16,6 +16,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Authorization\Authorization.csproj" />
+      <ProjectReference Include="..\Exceptions\Exceptions.csproj" />
+      <ProjectReference Include="..\Factory\Factory.csproj" />
+      <ProjectReference Include="..\Move\Move.csproj" />
     </ItemGroup>
 
 </Project>

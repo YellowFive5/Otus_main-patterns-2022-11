@@ -27,7 +27,7 @@ namespace Authorization
         {
             try
             {
-                var json = JwtBuilder.Create().WithAlgorithm(new NoneAlgorithm()).Decode(token);
+                JwtBuilder.Create().WithAlgorithm(new NoneAlgorithm()).Decode(token);
                 return true;
             }
             catch (Exception)
@@ -85,7 +85,7 @@ namespace Authorization
                                      .Encode();
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return null;
             }
@@ -93,7 +93,7 @@ namespace Authorization
             return null;
         }
 
-        public object CheckBattleAuthorizationTokenCorrect(string token)
+        public bool CheckBattleAuthorizationTokenCorrect(string token)
         {
             return CheckTokenCorrect(token);
         }

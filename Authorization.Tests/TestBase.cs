@@ -1,8 +1,8 @@
 ﻿#region Usings
 
+using Exceptions;
 using Moq;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 
 #endregion
 
