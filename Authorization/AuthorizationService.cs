@@ -49,5 +49,17 @@ namespace Authorization
                 return false;
             }
         }
+
+        public string RegisterBattle(string authorizationToken, int[] battleUserIds)
+        {
+            if (CheckAuthorizationTokenCorrect(authorizationToken))
+            {
+                var id = Battles.Count + 1;
+                Battles.Add(id, battleUserIds);
+                return id.ToString();
+            }
+
+            return null;
+        }
     }
 }
