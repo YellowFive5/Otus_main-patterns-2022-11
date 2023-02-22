@@ -15,7 +15,7 @@ namespace Authorization.Tests
         {
             var user = new User { Id = 1 };
             var authorizationService = new AuthorizationService();
-            var authorizationToken = authorizationService.AuthorizeUser(user.Id, pass);
+            var authorizationToken = authorizationService.GetAuthorizeToken(user.Id, pass);
 
             authorizationService.CheckTokenCorrect(authorizationToken).Should().Be(expected);
         }
@@ -27,7 +27,7 @@ namespace Authorization.Tests
             var battleUserIds = new[] { 1, 2, 3 };
             var authorizationService = new AuthorizationService();
 
-            var authorizationToken = authorizationService.AuthorizeUser(user.Id, "User_1_Pass_!");
+            var authorizationToken = authorizationService.GetAuthorizeToken(user.Id, "User_1_Pass_!");
         }
     }
 }
