@@ -18,6 +18,8 @@ namespace Authorization
                                                                   { 3, "User_3_Pass_!" },
                                                               };
 
+        public Dictionary<int, int[]> Battles { get; } = new();
+
         public string GetAuthorizeToken(int userId, string userPass)
         {
             if (userPasses.TryGetValue(userId, out var pass)
@@ -26,14 +28,14 @@ namespace Authorization
                 return JwtBuilder.Create()
                                  .WithAlgorithm(new NoneAlgorithm())
                                  .AddClaim("exp", DateTimeOffset.UtcNow.AddHours(1).ToUnixTimeSeconds())
-                                 // .AddClaim("claim1", 0)
+                                 .AddClaim("userId", userId)
                                  .Encode();
             }
 
             return null;
         }
 
-        public bool CheckTokenCorrect(string token)
+        public bool CheckAuthorizationTokenCorrect(string token)
         {
             try
             {

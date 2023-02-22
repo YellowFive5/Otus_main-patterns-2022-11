@@ -1,5 +1,6 @@
 ﻿#region Usings
 
+using System.Linq;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -9,25 +10,33 @@ namespace Authorization.Tests
 {
     public class WhenAuthorizing : TestBase
     {
-        [TestCase("User_1_Pass_!", true)]
-        [TestCase("Junk_!21*", false)]
-        public void AuthorizationTokenCorrectWhenPassCorrect(string pass, bool expected)
+        [TestCase(1, "User_1_Pass_!", true)]
+        [TestCase(1, "Junk_!21*", false)]
+        [TestCase(99, "26asd*!", false)]
+        public void AuthorizationTokenCorrectWhenPassCorrect(int userId, string userPass, bool expected)
         {
-            var user = new User { Id = 1 };
+            var user = new User { Id = userId };
             var authorizationService = new AuthorizationService();
-            var authorizationToken = authorizationService.GetAuthorizeToken(user.Id, pass);
+            
+            var authorizationToken = authorizationService.GetAuthorizeToken(user.Id, userPass);
 
-            authorizationService.CheckTokenCorrect(authorizationToken).Should().Be(expected);
+            authorizationService.CheckAuthorizationTokenCorrect(authorizationToken).Should().Be(expected);
         }
 
-        [Test]
-        public void METHOD()
+        [TestCase(1, "User_1_Pass_!", true)]
+        [TestCase(1, "Junk_!21*", false)]
+        [TestCase(99, "26asd*!", false)]
+        public void AuthorizedUserCanStartBattle(int userId, string userPass, bool expected)
         {
-            var user = new User { Id = 1 };
+            var user = new User { Id = userId };
             var battleUserIds = new[] { 1, 2, 3 };
             var authorizationService = new AuthorizationService();
+            var authorizationToken = authorizationService.GetAuthorizeToken(user.Id, userPass);
 
-            var authorizationToken = authorizationService.GetAuthorizeToken(user.Id, "User_1_Pass_!");
+            var battleId = authorizationService.RegisterBattle(authorizationToken, battleUserIds);
+
+            (battleId != null).Should().Be(expected);
+            (authorizationService.Battles.Count() != 0).Should().Be(expected);
         }
     }
 }
