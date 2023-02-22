@@ -148,5 +148,11 @@ namespace Exceptions
             new InterpretCommand(message, Games, ioc)
                 .Execute();
         }
+
+        public void OnAuthorizedMessageReceived(Message message)
+        {
+            new InterpretAuthorizedCommand(message, Games, ioc)
+                .Execute();
+        }
     }
 }
