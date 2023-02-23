@@ -48,6 +48,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBroker", "MessageBro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBroker.Tests", "MessageBroker.Tests\MessageBroker.Tests.csproj", "{268F38D3-EE2A-4876-A24C-AA17C825BEA7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "19_Authorization", "19_Authorization", "{AB986706-59BF-473E-B2D3-18D8C2A2BD82}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{8B9DFD36-BE21-49E1-97A6-AD7920E9FC43}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization.Tests", "Authorization.Tests\Authorization.Tests.csproj", "{2F5CEE92-A251-4263-83D8-40C4B1D82689}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "21_Microservices", "21_Microservices", "{83487716-CCFA-4F15-8871-7D9117060F82}"
 	ProjectSection(SolutionItems) = preProject
 		Microservices\Description.txt = Microservices\Description.txt

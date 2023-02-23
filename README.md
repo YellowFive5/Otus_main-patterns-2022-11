@@ -48,4 +48,16 @@
 
 19_Создание микросервиса
 
+* [Authorization](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Authorization)
+* [Authorization.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Authorization.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/8)
+
+20_Микросервисная архитектура
+
 ...
+
+23_Состояние
+
+...
+
+

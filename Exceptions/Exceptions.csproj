@@ -5,9 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Command\Command.csproj"/>
-        <ProjectReference Include="..\Factory\Factory.csproj"/>
-        <ProjectReference Include="..\MessageBroker\MessageBroker.csproj"/>
+        <ProjectReference Include="..\Authorization\Authorization.csproj" />
+        <ProjectReference Include="..\Command\Command.csproj" />
+        <ProjectReference Include="..\Factory\Factory.csproj" />
+        <ProjectReference Include="..\MessageBroker\MessageBroker.csproj" />
     </ItemGroup>
 
 </Project>
