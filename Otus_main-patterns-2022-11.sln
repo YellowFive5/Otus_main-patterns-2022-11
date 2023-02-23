@@ -48,6 +48,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBroker", "MessageBro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageBroker.Tests", "MessageBroker.Tests\MessageBroker.Tests.csproj", "{268F38D3-EE2A-4876-A24C-AA17C825BEA7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "21_Microservices", "21_Microservices", "{83487716-CCFA-4F15-8871-7D9117060F82}"
+	ProjectSection(SolutionItems) = preProject
+		Microservices\Description.txt = Microservices\Description.txt
+		Microservices\Diagram = Microservices\Diagram
+		Microservices\Diagram.crswap = Microservices\Diagram.crswap
+		Microservices\Diagram.jpg = Microservices\Diagram.jpg
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
