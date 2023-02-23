@@ -52,9 +52,10 @@
 * [Authorization.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Authorization.Tests)
 * [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/8)
 
-20_Микросервисная архитектура
+21_Микросервисная архитектура
 
-...
+* [Diagram](https://github.com/YellowFive5/Otus_main-patterns-2022-11/blob/main/Microservices/Diagram.jpg)
+* [Description](https://github.com/YellowFive5/Otus_main-patterns-2022-11/blob/main/Microservices/Description.txt)
 
 23_Состояние
 
