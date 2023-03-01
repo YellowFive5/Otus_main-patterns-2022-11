@@ -22,13 +22,13 @@ namespace Exceptions
 
         public Queue<ICommand> Commands { get; }
         private readonly ILogger logger;
-        private readonly ServerState state;
+        public ServerState State { get; set; }
 
         public Server(Queue<ICommand> commands, ILogger logger)
         {
             Commands = commands;
             this.logger = logger;
-            state = new DefaultState(this);
+            State = new DefaultState(this);
         }
 
         public void RunCommandsTillFirstException()
@@ -109,7 +109,7 @@ namespace Exceptions
             Games = new Dictionary<int, ConcurrentQueue<ICommand>> { { 1, gameCommands } };
             this.ioc = ioc;
             this.logger = logger;
-            state = new DefaultState(this);
+            State = new DefaultState(this);
         }
 
         public bool HardStopped { get; set; }
@@ -123,7 +123,7 @@ namespace Exceptions
                                       {
                                           while (!HardStopped || (!SoftStopped && !game.Value.Any()))
                                           {
-                                              state.Handle(game);
+                                              State.Handle(game);
                                           }
                                       });
             }

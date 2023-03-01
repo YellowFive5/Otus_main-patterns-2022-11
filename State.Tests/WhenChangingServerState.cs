@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading;
 using Command;
 using Exceptions;
+using Exceptions.State;
 using FluentAssertions;
 using Moq;
 using Multithreading;
@@ -37,6 +38,19 @@ namespace State.Tests
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
             testCommand2.Verify(fc => fc.Execute(), Times.Never);
             server.Games.First().Value.Should().NotBeEmpty();
+        }
+
+        [Test]
+        public void ServerStateChangesFromDefaultStateToMoveToState()
+        {
+            var queue = new ConcurrentQueue<ICommand>();
+            var server = new Server(Ioc.Object, queue, Logger.Object);
+            var changeStateCommand = new ChangeStateToMoveToCommand(server);
+            queue.Enqueue(changeStateCommand);
+
+            server.RunMultithreadCommands();
+
+            server.State.Should().BeOfType<MoveToState>();
         }
     }
 }
