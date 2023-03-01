@@ -46,10 +46,15 @@ namespace State.Tests
             var queue = new ConcurrentQueue<ICommand>();
             var server = new Server(Ioc.Object, queue, Logger.Object);
             var changeStateCommand = new ChangeStateToMoveToCommand(server);
+            var mre = new ManualResetEvent(false);
+            var lastCommand = new Mock<ICommand>();
+            lastCommand.Setup(c => c.Execute()).Callback(() => mre.Set());
             queue.Enqueue(changeStateCommand);
+            queue.Enqueue(lastCommand.Object);
 
             server.RunMultithreadCommands();
 
+            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
             server.State.Should().BeOfType<MoveToState>();
         }
     }

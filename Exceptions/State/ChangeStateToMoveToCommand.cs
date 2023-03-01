@@ -1,6 +1,5 @@
 ﻿#region Usings
 
-using System;
 using Command;
 
 #endregion
@@ -18,7 +17,7 @@ namespace Exceptions.State
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            server.State = new MoveToState(server);
         }
     }
 }
