@@ -24,11 +24,11 @@ namespace Exceptions
         private readonly ILogger logger;
         private readonly ServerState state;
 
-        public Server(Queue<ICommand> commands, ILogger logger, ServerState state = null)
+        public Server(Queue<ICommand> commands, ILogger logger)
         {
             Commands = commands;
             this.logger = logger;
-            this.state = state ?? new DefaultState(this);
+            state = new DefaultState(this);
         }
 
         public void RunCommandsTillFirstException()
@@ -104,12 +104,12 @@ namespace Exceptions
         public Dictionary<int, ConcurrentQueue<ICommand>> Games { get; }
         private readonly IResolvable ioc;
 
-        public Server(IResolvable ioc, ConcurrentQueue<ICommand> gameCommands, ILogger logger, ServerState state = null)
+        public Server(IResolvable ioc, ConcurrentQueue<ICommand> gameCommands, ILogger logger)
         {
             Games = new Dictionary<int, ConcurrentQueue<ICommand>> { { 1, gameCommands } };
             this.ioc = ioc;
             this.logger = logger;
-            this.state = state ?? new DefaultState(this);
+            state = new DefaultState(this);
         }
 
         public bool HardStopped { get; set; }

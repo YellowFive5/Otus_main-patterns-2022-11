@@ -17,7 +17,24 @@ namespace Exceptions.State
 
         public override void Handle(KeyValuePair<int, ConcurrentQueue<ICommand>> game)
         {
-            throw new NotImplementedException();
+            try
+            {
+                game.Value.TryDequeue(out var command);
+                // move to another queue or some another logic 
+                command?.Execute();
+            }
+            catch (HardStopException)
+            {
+                server.HardStopped = true;
+            }
+            catch (SoftStopException)
+            {
+                server.SoftStopped = true;
+            }
+            catch (Exception)
+            {
+                // continue
+            }
         }
     }
 }
