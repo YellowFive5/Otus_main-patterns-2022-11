@@ -57,5 +57,25 @@ namespace State.Tests
             mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
             server.State.Should().BeOfType<MoveToState>();
         }
+
+        [Test]
+        public void ServerStateChangesFromMoveToStateToDefaultState()
+        {
+            var queue = new ConcurrentQueue<ICommand>();
+            var server = new Server(Ioc.Object, queue, Logger.Object);
+            var changeStateCommand1 = new ChangeStateToMoveToCommand(server);
+            var changeStateCommand2 = new ChangeStateToDefaultCommand(server);
+            var lastCommand = new Mock<ICommand>();
+            var mre = new ManualResetEvent(false);
+            lastCommand.Setup(c => c.Execute()).Callback(() => mre.Set());
+            queue.Enqueue(changeStateCommand1);
+            queue.Enqueue(changeStateCommand2);
+            queue.Enqueue(lastCommand.Object);
+
+            server.RunMultithreadCommands();
+
+            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
+            server.State.Should().BeOfType<DefaultState>();
+        }
     }
 }
