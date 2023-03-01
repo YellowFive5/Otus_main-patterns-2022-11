@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Command;
 using Exceptions.Commands;
 using Exceptions.Handlers;
+using Exceptions.State;
 using Factory;
 using MessageBroker;
 
@@ -21,11 +22,13 @@ namespace Exceptions
 
         public Queue<ICommand> Commands { get; }
         private readonly ILogger logger;
+        private readonly ServerState state;
 
-        public Server(Queue<ICommand> commands, ILogger logger)
+        public Server(Queue<ICommand> commands, ILogger logger, ServerState state = null)
         {
             Commands = commands;
             this.logger = logger;
+            this.state = state ?? new DefaultState(this);
         }
 
         public void RunCommandsTillFirstException()
@@ -101,15 +104,16 @@ namespace Exceptions
         public Dictionary<int, ConcurrentQueue<ICommand>> Games { get; }
         private readonly IResolvable ioc;
 
-        public Server(IResolvable ioc, ConcurrentQueue<ICommand> gameCommands, ILogger logger)
+        public Server(IResolvable ioc, ConcurrentQueue<ICommand> gameCommands, ILogger logger, ServerState state = null)
         {
             Games = new Dictionary<int, ConcurrentQueue<ICommand>> { { 1, gameCommands } };
             this.ioc = ioc;
             this.logger = logger;
+            this.state = state ?? new DefaultState(this);
         }
 
-        private bool HardStopped { get; set; }
-        private bool SoftStopped { get; set; }
+        public bool HardStopped { get; set; }
+        public bool SoftStopped { get; set; }
 
         public void RunMultithreadCommands()
         {
@@ -119,23 +123,7 @@ namespace Exceptions
                                       {
                                           while (!HardStopped || (!SoftStopped && !game.Value.Any()))
                                           {
-                                              try
-                                              {
-                                                  game.Value.TryDequeue(out var command);
-                                                  command?.Execute();
-                                              }
-                                              catch (HardStopException)
-                                              {
-                                                  HardStopped = true;
-                                              }
-                                              catch (SoftStopException)
-                                              {
-                                                  SoftStopped = true;
-                                              }
-                                              catch (Exception)
-                                              {
-                                                  // continue
-                                              }
+                                              state.Handle(game);
                                           }
                                       });
             }
