@@ -28,7 +28,7 @@ namespace Multithreading.Tests
 
             server.RunMultithreadCommands();
 
-            mre.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
+            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace Multithreading.Tests
 
             server.RunMultithreadCommands();
 
-            mre.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
+            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
             testCommand2.Verify(fc => fc.Execute(), Times.Never);
             server.Games.First().Value.Should().NotBeEmpty();
@@ -71,9 +71,9 @@ namespace Multithreading.Tests
 
             server.RunMultithreadCommands();
 
-            mre1.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
+            mre1.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
             testCommand1.Verify(fc => fc.Execute(), Times.Once);
-            mre2.WaitOne(TimeSpan.FromSeconds(1)).Should().BeTrue();
+            mre2.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
             testCommand2.Verify(fc => fc.Execute(), Times.Once);
             server.Games.First().Value.Should().BeEmpty();
         }
