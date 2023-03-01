@@ -59,6 +59,10 @@
 
 23_Состояние
 
-...
+* [State.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/State.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/9)
 
+24_Цепочка обязанностей
+
+...
 
