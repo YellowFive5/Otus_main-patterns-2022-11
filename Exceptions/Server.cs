@@ -11,6 +11,7 @@ using Exceptions.Handlers;
 using Exceptions.State;
 using Factory;
 using MessageBroker;
+using Move;
 
 #endregion
 
@@ -103,6 +104,7 @@ namespace Exceptions
 
         public Dictionary<int, ConcurrentQueue<ICommand>> Games { get; }
         private readonly IResolvable ioc;
+        public List<IMovable> CollisionObjects { get; } = new();
 
         public Server(IResolvable ioc, ConcurrentQueue<ICommand> gameCommands, ILogger logger)
         {
