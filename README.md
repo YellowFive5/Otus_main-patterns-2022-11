@@ -64,5 +64,10 @@
 
 24_Цепочка обязанностей
 
-...
+* [Chain](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Chain)
+* [Chain.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Chain.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/10)
 
+28_Интерпретатор
+
+...
