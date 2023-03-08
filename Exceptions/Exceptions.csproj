@@ -6,6 +6,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Authorization\Authorization.csproj" />
+        <ProjectReference Include="..\Chain\Chain.csproj" />
         <ProjectReference Include="..\Command\Command.csproj" />
         <ProjectReference Include="..\Factory\Factory.csproj" />
         <ProjectReference Include="..\MessageBroker\MessageBroker.csproj" />
