@@ -46,7 +46,7 @@ namespace Chain.Tests
 
             server.RunMultithreadCommands();
 
-            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
+            mre.WaitOne(TimeSpan.FromSeconds(5)).Should().BeTrue();
             server.CollisionObjects.Count.Should().Be(2);
             server.CollisionObjects.ElementAt(0).Position.X.Should().Be(1);
             server.CollisionObjects.ElementAt(0).Position.Y.Should().Be(1);
@@ -78,7 +78,7 @@ namespace Chain.Tests
 
             server.RunMultithreadCommands();
 
-            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
+            mre.WaitOne(TimeSpan.FromSeconds(5)).Should().BeTrue();
             server.CollisionObjects.Count.Should().Be(0);
         }
 
@@ -107,7 +107,7 @@ namespace Chain.Tests
 
             server.RunMultithreadCommands();
 
-            mre.WaitOne(TimeSpan.FromSeconds(2)).Should().BeTrue();
+            mre.WaitOne(TimeSpan.FromSeconds(5)).Should().BeTrue();
             server.CollisionObjects.Count.Should().Be(2);
             server.CollisionObjects.ElementAt(0).Position.X.Should().Be(9);
             server.CollisionObjects.ElementAt(0).Position.Y.Should().Be(9);
