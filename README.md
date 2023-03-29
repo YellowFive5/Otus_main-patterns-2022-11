@@ -70,4 +70,5 @@
 
 28_Интерпретатор
 
-...
+* [Interpreter.Tests](https://github.com/YellowFive5/Otus_main-patterns-2022-11/tree/main/Interpreter.Tests)
+* [Pull request](https://github.com/YellowFive5/Otus_main-patterns-2022-11/pull/11)
